@@ -1,0 +1,21 @@
+using System;
+
+namespace Variables
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int age;
+            float heightM;
+            char driversLicense;
+            string name;
+            bool adult; // age >=18
+            byte bodyTemperature;
+            sbyte comfortWinter;
+            long dickLenght;
+            short iq;
+            uint daysToSenior;
+        }
+    }
+}
