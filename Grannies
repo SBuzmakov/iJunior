@@ -13,9 +13,10 @@ namespace Grannies
             Console.WriteLine("You go into the hospital and see queue of grannies. How many grannies do you see?");
             Console.WriteLine($"I see {queueSize = Convert.ToInt32(Console.ReadLine())} grannies");
             queueTime = queueSize * doctorsTime;
-            int hourTime = queueTime / 60;
-            int minutesTime = queueTime % 60;
-            Console.Write($"You must stay in queue {hourTime} hours {minutesTime} min ");
+            int minInHour = 60;
+            int hourLost = queueTime / minInHour;
+            int minutesLost = queueTime % minInHour;
+            Console.Write($"You must stay in queue {hourLost} hours {minutesLost} min ");
         }
     }
 }
