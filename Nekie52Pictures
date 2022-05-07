@@ -10,7 +10,7 @@ namespace nekiePictures
             int pictsInLine = 3;
             int amountLines = sumPict / pictsInLine;
             int extraPicts = sumPict % pictsInLine;
-            Console.WriteLine($"Amount of 3 picture lines is:  {amountLines}. Amount of extra pictures is {extraPicts}");
+            Console.WriteLine($"Amount of pictsInLine is:  {amountLines}. Amount of extra pictures is {extraPicts}");
         }
     }
 }
