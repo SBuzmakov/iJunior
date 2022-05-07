@@ -1,0 +1,16 @@
+using System;
+
+namespace nekiePictures
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int sumPict = 52;
+            int pictsInLine = 3;
+            int amountLines = sumPict / pictsInLine;
+            int extraPicts = sumPict % pictsInLine;
+            Console.WriteLine($"Amount of 3 picture lines is:  {amountLines}. Amount of extra pictures is {extraPicts}");
+        }
+    }
+}
