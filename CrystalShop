@@ -1,0 +1,20 @@
+using System;
+
+namespace CrystalShop
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int gold;
+            int crystalCount;
+            int crystalPrice = 50;
+            Console.Write("You have count of gold:  ");
+            gold = Convert.ToInt32(Console.ReadLine());
+            Console.Write($"We have crystals for {crystalPrice} of gold. How many crystals do you want to buy?  ");
+            crystalCount = Convert.ToInt32(Console.ReadLine());
+            gold -= crystalCount * crystalPrice;
+            Console.WriteLine($"You bought {crystalCount} crystal, balance of gold: {gold}  ");
+        }
+    }
+}
