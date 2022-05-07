@@ -1,1 +1,19 @@
+using System;
+
+namespace ChangeVariables
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string name = "Buzmakov";
+            string surName = "Sergey";
+            Console.WriteLine($"Wrong Info. Name:{name}. Surname: {surName}");
+            string nameFixed = "Sergey";
+            surName = name;
+            name = nameFixed;
+            Console.WriteLine($"Correct Info. Name:{name}. SurName: {surName}");
+        }
+    }
+}
 
