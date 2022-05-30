@@ -21,6 +21,7 @@ namespace Cycle2
                     break;
                 }
             }
+            
         Console.WriteLine("You can exit now.");
         }
     }
