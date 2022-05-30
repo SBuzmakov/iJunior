@@ -1,0 +1,20 @@
+using System;
+
+namespace Cycle3
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int firstNumber = 5;
+            int addNumber = 7;
+            int maxRange = 100;
+
+            for (firstNumber = 5; firstNumber < maxRange; firstNumber += addNumber)
+            {
+                Console.WriteLine(firstNumber);
+            }
+
+        }
+    }
+}
