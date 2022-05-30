@@ -9,20 +9,16 @@ namespace Cycle2
             string password = "exit";
             string userInput;
 
-            Console.Write("Enter the password: ");
+            Console.Write("Enter password: ");
             userInput = Console.ReadLine();
 
             while (userInput != password)
             {
-                Console.Write("Enter the password again: ");
+                Console.Write("Enter password again: ");
                 userInput = Console.ReadLine();
-                if (userInput == password)
-                {
-                    break;
-                }
             }
-            
-        Console.WriteLine("You can exit now.");
+
+            Console.WriteLine("You can exit now");
         }
     }
 }
