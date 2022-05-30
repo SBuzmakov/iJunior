@@ -6,15 +6,17 @@ namespace Cycle3
     {
         static void Main(string[] args)
         {
+            int currentNumber;
             int firstNumber = 5;
             int addNumber = 7;
             int maxRange = 100;
 
-            for (firstNumber = 5; firstNumber < maxRange; firstNumber += addNumber)
+            for (currentNumber = firstNumber ; currentNumber < maxRange; currentNumber += addNumber)
             {
-                Console.WriteLine(firstNumber);
+                Console.WriteLine(currentNumber);
             }
 
         }
     }
 }
+
