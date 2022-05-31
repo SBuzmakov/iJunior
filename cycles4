@@ -9,25 +9,23 @@ namespace Cycles4
             int randomNumber;
             int minRange = 0;
             int maxRange = 100;
-            Random rand = new Random();
-            randomNumber = rand.Next(minRange, maxRange);
+            Random random = new Random();
+            randomNumber = random.Next(minRange, maxRange);
             int currentNumber;
-            int multNumber1 = 3;
-            int multNumber2 = 5;
+            int multipleNumber1 = 3;
+            int multipleNumber2 = 5;
             int sumNumber = minRange;
 
             for (currentNumber = minRange; currentNumber <= randomNumber; currentNumber++) 
             {
-                if (currentNumber % multNumber1 == 0 || currentNumber % multNumber2 == 0)
+                if (currentNumber % multipleNumber1 == 0 || currentNumber % multipleNumber2 == 0)
                 {
                     sumNumber += currentNumber;
                 }
             }
 
             Console.WriteLine($" Random number is {randomNumber}.");
-            Console.WriteLine($" Summary of multiples of {multNumber1} and {multNumber2} is\n{sumNumber}");
-
-
+            Console.WriteLine($" Summary of multiples of {multipleNumber1} and {multipleNumber2} is\n{sumNumber}");
         }
     }
 }
