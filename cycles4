@@ -8,7 +8,7 @@ namespace Cycles4
         {
             int randomNumber;
             int minRange = 0;
-            int maxRange = 30;
+            int maxRange = 100;
             Random rand = new Random();
             randomNumber = rand.Next(minRange, maxRange);
             int currentNumber;
