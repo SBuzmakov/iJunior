@@ -1,30 +1,36 @@
 using System;
 
-namespace Cycle4
+namespace Cycles4
 {
     class Program
     {
         static void Main(string[] args)
         {
-            int minRange = 0;
-            int maxRange = 101;
+            int randomNumber;
+            int minRange = 1;
+            int maxRange = 20;
             Random rand = new Random();
-            int number = rand.Next(minRange, maxRange);
+            randomNumber = rand.Next(minRange, maxRange);
             int currentNumber;
+            int multNumber1 = 3;
             int sumNumber;
 
-            Console.WriteLine($"Random number is {number}\nList of numbers multiples of 3 is: ");
+            Console.WriteLine($" Random number is: {randomNumber}");
 
-            for (currentNumber = minRange; currentNumber < number; currentNumber += 3)
+
+            for (currentNumber = minRange; currentNumber <= randomNumber; currentNumber++ ) // список всех чисел для наглядности
             {
                 Console.WriteLine(currentNumber);
             }
 
-            Console.WriteLine("Summary of multiples of 3 is: ");
+            Console.WriteLine($"Multiple numbers of {multNumber1}: ");
 
-            for (currentNumber = minRange; currentNumber < number; currentNumber += 3+currentNumber)
+            for (currentNumber = minRange; currentNumber <= randomNumber; currentNumber++) // список чисел кратных 3 для наглядности
             {
-                Console.WriteLine(currentNumber);
+                if (currentNumber % multNumber1 == 0 )
+                {
+                    Console.WriteLine(currentNumber);
+                }
             }
 
         }
