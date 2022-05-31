@@ -1,0 +1,32 @@
+using System;
+
+namespace Cycle4
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int minRange = 0;
+            int maxRange = 101;
+            Random rand = new Random();
+            int number = rand.Next(minRange, maxRange);
+            int currentNumber;
+            int sumNumber;
+
+            Console.WriteLine($"Random number is {number}\nList of numbers multiples of 3 is: ");
+
+            for (currentNumber = minRange; currentNumber < number; currentNumber += 3)
+            {
+                Console.WriteLine(currentNumber);
+            }
+
+            Console.WriteLine("Summary of multiples of 3 is: ");
+
+            for (currentNumber = minRange; currentNumber < number; currentNumber += 3+currentNumber)
+            {
+                Console.WriteLine(currentNumber);
+            }
+
+        }
+    }
+}
