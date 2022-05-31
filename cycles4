@@ -1,0 +1,33 @@
+using System;
+
+namespace Cycles4
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int randomNumber;
+            int minRange = 0;
+            int maxRange = 30;
+            Random rand = new Random();
+            randomNumber = rand.Next(minRange, maxRange);
+            int currentNumber;
+            int multNumber1 = 3;
+            int multNumber2 = 5;
+            int sumNumber = minRange;
+
+            for (currentNumber = minRange; currentNumber <= randomNumber; currentNumber++) 
+            {
+                if (currentNumber % multNumber1 == 0 || currentNumber % multNumber2 == 0)
+                {
+                    sumNumber += currentNumber;
+                }
+            }
+
+            Console.WriteLine($" Random number is {randomNumber}.");
+            Console.WriteLine($" Summary of multiples of {multNumber1} and {multNumber2} is\n{sumNumber}");
+
+
+        }
+    }
+}
