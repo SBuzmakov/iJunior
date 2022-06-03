@@ -1,0 +1,169 @@
+using System;
+
+namespace ConsoleApp4
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+			float balanceRub;
+			float balanceUsd;
+			float balanceEuro;
+			float rateRubIn1Usd;
+			float rateRubIn1Euro;
+			int userChoice;
+			float userInputCount;
+			int minChangeRate = 1;
+			int maxChangeRate = 150;
+			Random randomRate = new Random();
+			rateRubIn1Usd = randomRate.Next(minChangeRate, maxChangeRate);
+			rateRubIn1Euro = randomRate.Next(minChangeRate, maxChangeRate);
+			float rateUsdIn1Euro = rateRubIn1Euro / rateRubIn1Usd;
+			float rateEuroIn1Usd = rateRubIn1Usd / rateRubIn1Euro;
+
+			Console.ForegroundColor = ConsoleColor.Green;
+			Console.WriteLine($"Welcome to Currency Exchange. \nToday random rates of exchange are:\n 1 Usd = {rateRubIn1Usd} Rub \n 1 Euro = {rateRubIn1Euro} Rub\n" +
+				$" 1 Usd = {rateEuroIn1Usd} Euro\n 1 Euro = {rateUsdIn1Euro} Usd\n\nEnter balance of your money:");
+			Console.ResetColor();
+
+			Console.Write("Enter Rub: ");
+			balanceRub = Convert.ToSingle(Console.ReadLine());
+			Console.Write("Enter Usd: ");
+			balanceUsd = Convert.ToSingle(Console.ReadLine());
+			Console.Write("Enter Euro: ");
+			balanceEuro = Convert.ToSingle(Console.ReadLine());
+
+			Console.ForegroundColor = ConsoleColor.Yellow;
+			Console.WriteLine($"\nYour balance of money:\n {balanceRub} Rub\n {balanceUsd} $\n {balanceEuro} Euro\n\n What do you want?\n enter 1 to change Rub to Usd\n enter 2 " +
+				$"to change Rub" +
+			$" to Euro\n enter 3 to change Usd to Rub\n enter 4 to change Usd to Euro\n enter 5 to change Euro to Rub\n enter 6 to change Euro to Usd\n " +
+			$"enter 7 to finish operation");
+			Console.ResetColor();
+
+			userChoice = Convert.ToInt32(Console.ReadLine());
+
+			while ( userChoice != 7 )
+			{
+				switch (Convert.ToString(userChoice))
+				{
+					case "1":
+						Console.Write("\nChange Rub to Usd:\n How many Rub do you want to change?	");
+						userInputCount = Convert.ToSingle(Console.ReadLine());
+						if (balanceRub >= userInputCount)
+						{
+							balanceRub -= userInputCount;
+							balanceUsd += userInputCount / rateRubIn1Usd;
+						}
+						else
+						{
+
+							Console.ForegroundColor = ConsoleColor.Red;
+							Console.WriteLine("\nNot enough Rub\nTry again\n");
+							Console.ResetColor();
+						}
+						break;
+					case "2":
+						Console.Write("\nChange Rub to Euro:\n How many Rub do you want to change?	");
+						userInputCount = Convert.ToSingle(Console.ReadLine());
+						if (balanceRub >= userInputCount)
+						{
+							balanceRub -= userInputCount;
+							balanceEuro += userInputCount / rateRubIn1Euro;
+						}
+						else
+						{
+							Console.ForegroundColor = ConsoleColor.Red;
+							Console.WriteLine("\nNot enough Rub\nTry again\n");
+							Console.ResetColor();
+						}
+						break;
+					case "3":
+						Console.Write("\nChange Usd to Rub:\n How many Usd do you want to change?	");
+						userInputCount = Convert.ToSingle(Console.ReadLine());
+						if (balanceUsd >= userInputCount)
+						{
+							balanceUsd -= userInputCount;
+							balanceRub += userInputCount * rateRubIn1Usd;
+						}
+						else
+						{
+							Console.ForegroundColor = ConsoleColor.Red;
+							Console.WriteLine("\nNot enough Usd\nTry again\n");
+							Console.ResetColor();
+						}
+						break;
+					case "4":
+						Console.Write("\nChange Usd to Euro:\n How many Usd do you want to change?	");
+						userInputCount = Convert.ToSingle(Console.ReadLine());
+						if (balanceUsd >= userInputCount)
+						{
+							balanceUsd -= userInputCount;
+							if (rateUsdIn1Euro > rateEuroIn1Usd)
+							{
+								balanceEuro += userInputCount / rateEuroIn1Usd;
+							}
+							else
+                            {
+								balanceEuro += userInputCount * rateEuroIn1Usd;
+							}
+						}
+						else
+						{
+							Console.ForegroundColor = ConsoleColor.Red;
+							Console.WriteLine("\nNot enough Usd\nTry again\n");
+							Console.ResetColor();
+						}
+						break;
+					case "5":
+						Console.Write("\nChange Euro to Rub:\n How many Euro do you want to change?	");
+						userInputCount = Convert.ToSingle(Console.ReadLine());
+						if (balanceEuro >= userInputCount)
+						{
+							balanceEuro -= userInputCount;
+							balanceRub += userInputCount * rateRubIn1Euro;
+						}
+						else
+						{
+							Console.ForegroundColor = ConsoleColor.Red;
+							Console.WriteLine("\nNot enough Euro\nTry again\n");
+							Console.ResetColor();
+						}
+						break;
+					case "6":
+						Console.Write("\nChange Euro to Usd:\n How many Euro do you want to change?	");
+						userInputCount = Convert.ToSingle(Console.ReadLine());
+						if (balanceEuro >= userInputCount)
+						{
+							balanceEuro -= userInputCount;
+							if (rateUsdIn1Euro > rateEuroIn1Usd)
+							{
+								balanceUsd += userInputCount / rateEuroIn1Usd;
+							}
+							else
+							{
+								balanceUsd += userInputCount * rateEuroIn1Usd;
+							}
+						}
+						else
+						{
+							Console.ForegroundColor = ConsoleColor.Red;
+							Console.WriteLine("\nNot enough Usd\nTry again\n");
+							Console.ResetColor();
+						}
+						break;
+
+				}
+				Console.ForegroundColor = ConsoleColor.Yellow;
+				Console.WriteLine($"\nYour balance of money:\n {balanceRub} Rub\n {balanceUsd} $\n {balanceEuro} Euro\n \nWhat do you want?\n\n enter 1 to change Rub to Usd\n enter 2 to change Rub" +
+				$" to Euro\n enter 3 to change Usd to Rub\n enter 4 to change Usd to Euro\n enter 5 to change Euro to Rub\n enter 6 to change Euro to Usd\n " +
+				$"enter 7 to finish operation");
+				Console.ResetColor();
+				userChoice = Convert.ToInt32(Console.ReadLine());
+			}
+
+			Console.ForegroundColor = ConsoleColor.Green;
+			Console.WriteLine("\nThank you and good luck!");
+			Console.ResetColor();
+		}
+	}
+}
