@@ -49,101 +49,121 @@ namespace ConsoleApp4
 					case "1":
 						Console.Write("\nChange Rub to Usd:\n How many Rub do you want to change?	");
 						userInputCount = Convert.ToSingle(Console.ReadLine());
+
 						if (balanceRub >= userInputCount)
 						{
 							balanceRub -= userInputCount;
 							balanceUsd += userInputCount / rateRubIn1Usd;
 						}
+
 						else
 						{
-
 							Console.ForegroundColor = ConsoleColor.Red;
 							Console.WriteLine("\nNot enough Rub\nTry again\n");
 							Console.ResetColor();
 						}
+
 						break;
 					case "2":
 						Console.Write("\nChange Rub to Euro:\n How many Rub do you want to change?	");
 						userInputCount = Convert.ToSingle(Console.ReadLine());
+
 						if (balanceRub >= userInputCount)
 						{
 							balanceRub -= userInputCount;
 							balanceEuro += userInputCount / rateRubIn1Euro;
 						}
+
 						else
 						{
 							Console.ForegroundColor = ConsoleColor.Red;
 							Console.WriteLine("\nNot enough Rub\nTry again\n");
 							Console.ResetColor();
 						}
+
 						break;
 					case "3":
 						Console.Write("\nChange Usd to Rub:\n How many Usd do you want to change?	");
 						userInputCount = Convert.ToSingle(Console.ReadLine());
+
 						if (balanceUsd >= userInputCount)
 						{
 							balanceUsd -= userInputCount;
 							balanceRub += userInputCount * rateRubIn1Usd;
 						}
+
 						else
 						{
 							Console.ForegroundColor = ConsoleColor.Red;
 							Console.WriteLine("\nNot enough Usd\nTry again\n");
 							Console.ResetColor();
 						}
+
 						break;
 					case "4":
 						Console.Write("\nChange Usd to Euro:\n How many Usd do you want to change?	");
 						userInputCount = Convert.ToSingle(Console.ReadLine());
+
 						if (balanceUsd >= userInputCount)
 						{
 							balanceUsd -= userInputCount;
+
 							if (rateUsdIn1Euro > rateEuroIn1Usd)
 							{
 								balanceEuro += userInputCount / rateEuroIn1Usd;
 							}
+
 							else
-                            {
+                                                        {
 								balanceEuro += userInputCount * rateEuroIn1Usd;
 							}
 						}
+
 						else
 						{
 							Console.ForegroundColor = ConsoleColor.Red;
 							Console.WriteLine("\nNot enough Usd\nTry again\n");
 							Console.ResetColor();
 						}
+
 						break;
 					case "5":
 						Console.Write("\nChange Euro to Rub:\n How many Euro do you want to change?	");
 						userInputCount = Convert.ToSingle(Console.ReadLine());
+
 						if (balanceEuro >= userInputCount)
 						{
 							balanceEuro -= userInputCount;
 							balanceRub += userInputCount * rateRubIn1Euro;
 						}
+
 						else
 						{
 							Console.ForegroundColor = ConsoleColor.Red;
 							Console.WriteLine("\nNot enough Euro\nTry again\n");
 							Console.ResetColor();
 						}
+
 						break;
 					case "6":
 						Console.Write("\nChange Euro to Usd:\n How many Euro do you want to change?	");
 						userInputCount = Convert.ToSingle(Console.ReadLine());
+
 						if (balanceEuro >= userInputCount)
 						{
 							balanceEuro -= userInputCount;
+
 							if (rateUsdIn1Euro > rateEuroIn1Usd)
 							{
 								balanceUsd += userInputCount / rateEuroIn1Usd;
 							}
+
 							else
 							{
 								balanceUsd += userInputCount * rateEuroIn1Usd;
 							}
 						}
+
 						else
 						{
 							Console.ForegroundColor = ConsoleColor.Red;
@@ -151,8 +171,8 @@ namespace ConsoleApp4
 							Console.ResetColor();
 						}
 						break;
-
 				}
+
 				Console.ForegroundColor = ConsoleColor.Yellow;
 				Console.WriteLine($"\nYour balance of money:\n {balanceRub} Rub\n {balanceUsd} $\n {balanceEuro} Euro\n \nWhat do you want?\n\n enter 1 to change Rub to Usd\n enter 2 to change Rub" +
 				$" to Euro\n enter 3 to change Usd to Rub\n enter 4 to change Usd to Euro\n enter 5 to change Euro to Rub\n enter 6 to change Euro to Usd\n " +
