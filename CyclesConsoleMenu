@@ -1,0 +1,231 @@
+using System;
+
+namespace CyclesConsoleMenu
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string name;
+            string phone;
+            int userChoice;
+            string choiceInside;
+            string date;
+            string nameCheck;
+            string phoneCheck;
+            string userColor;
+
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("\tДобро пожаловать в меню записи в наш автоцентр Kia и Haval. \n");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write("Введите ваше имя и фамилию или никнейм:\t");
+            Console.ResetColor();
+            name = Console.ReadLine();
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write("Введите ваш номер телефона для регистрации и записи:\t+7");
+            Console.ResetColor();
+            phone = Console.ReadLine();
+            Console.WriteLine($"\nЗдравствуйте, {name}, какой услугой вы хотите воспользоваться? Введите пункт меню:");
+            Console.WriteLine("\t1 -купить автомобиль\t2 -записаться на сервис\t 3 -выйти из меню\t4 \n");
+            userChoice = Convert.ToInt32(Console.ReadLine());
+
+            if (userChoice == 3)
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("До свидания!");
+                Console.ResetColor();
+            }
+
+            else if (userChoice == 1)
+            {
+                Console.WriteLine("\nКакой автомобиль вы хотите приобрести?\n\t1 -Kia\t2 -Haval");
+                choiceInside = Console.ReadLine();
+
+                switch (choiceInside)
+                {
+                    case "1":
+                    Console.Write("\nВедите желаемую дату посещения в удобном вам формате (например, дд/мм/гг):\t");
+                    date = Console.ReadLine();
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("\nДля оформления заявки и записи подтвердите ваше имя и телефон.");
+                    Console.ResetColor();
+                    Console.Write("\nВведите имя и фамилию или никнейм:\t");
+                    nameCheck = Console.ReadLine();
+                    Console.Write("\nВведите ваш номер телефона:\t+7");
+                    phoneCheck = Console.ReadLine();
+
+                        while (name != nameCheck || phone != phoneCheck)                                    
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("\nАвторизация не пройдена, попробуйте еще раз!");
+                            Console.ResetColor();
+                            Console.Write("\nВведите имя и фамилию или никнейм:\t");
+                            nameCheck = Console.ReadLine();
+                            Console.Write("\nВведите ваш номер телефона:\t+7");
+                            phoneCheck = Console.ReadLine();
+                        }
+
+                        if (name == nameCheck && phone == phoneCheck)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine($"\n{name}, cпециалист по продаже Kia ждёт вас в нашем автоцентре {date}. До скорой встречи!");
+                            Console.ResetColor();
+                        }
+
+                        break;
+                    case "2":
+                        Console.Write("\nВедите желаемую дату посещения в удобном вам формате (например, дд/мм/гг):\t");
+                        date = Console.ReadLine();
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.WriteLine("\nДля оформления заявки и записи подтвердите ваше имя и телефон.");
+                        Console.ResetColor();
+                        Console.Write("\nВведите имя и фамилию или никнейм:\t");
+                        nameCheck = Console.ReadLine();
+                        Console.Write("\nВведите ваш номер телефона:\t+7");
+                        phoneCheck = Console.ReadLine();
+
+                        while (name != nameCheck || phone != phoneCheck)                                    
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("\nАвторизация не пройдена, попробуйте еще раз!");
+                            Console.ResetColor();
+                            Console.Write("\nВведите имя и фамилию или никнейм:\t");
+                            nameCheck = Console.ReadLine();
+                            Console.Write("\nВведите ваш номер телефона:\t+7");
+                            phoneCheck = Console.ReadLine();
+                        }
+
+                        if (name == nameCheck && phone == phoneCheck)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine($"\n{name}, cпециалист по продаже Haval ждёт вас в нашем автоцентре {date}. До скорой встречи!");
+                            Console.ResetColor();
+                        }
+
+                        break;
+                }
+            }
+
+            else if (userChoice == 2)
+            {
+                Console.WriteLine("\nКакой сервис вас интересует?\n\t1 -техническое обслуживание\t2 -текущий ремонт");
+                choiceInside = Console.ReadLine();
+
+                switch (choiceInside)
+                {
+                    case "1":
+                        Console.Write("\nВедите желаемую дату посещения в удобном вам формате (например, дд/мм/гг):\t");
+                        date = Console.ReadLine();
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.WriteLine("\nДля оформления заявки и записи подтвердите ваше имя и телефон.");
+                        Console.ResetColor();
+                        Console.Write("\nВведите имя и фамилию или никнейм:\t");
+                        nameCheck = Console.ReadLine();
+                        Console.Write("\nВведите ваш номер телефона:\t+7");
+                        phoneCheck = Console.ReadLine();
+
+                        while (name != nameCheck || phone != phoneCheck)                                    
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("\nАвторизация не пройдена, попробуйте еще раз!");
+                            Console.ResetColor();
+                            Console.Write("\nВведите имя и фамилию или никнейм:\t");
+                            nameCheck = Console.ReadLine();
+                            Console.Write("\nВведите ваш номер телефона:\t+7");
+                            phoneCheck = Console.ReadLine();
+                        }
+
+                        if (name == nameCheck && phone == phoneCheck)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine($"\n{name}, мы ждём вас в нашем автоцентре {date} для технического обслужтвания. До скорой встречи!");
+                            Console.ResetColor();
+                        }
+
+                        break;
+                    case "2":
+                        Console.Write("\nВедите желаемую дату посещения в удобном вам формате (например, дд/мм/гг):\t");
+                        date = Console.ReadLine();
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.WriteLine("\nДля оформления заявки и записи подтвердите ваше имя и телефон.");
+                        Console.ResetColor();
+                        Console.Write("\nВведите имя и фамилию или никнейм:\t");
+                        nameCheck = Console.ReadLine();
+                        Console.Write("\nВведите ваш номер телефона:\t+7");
+                        phoneCheck = Console.ReadLine();
+
+                        while (name != nameCheck || phone != phoneCheck)                                    
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("\nАвторизация не пройдена, попробуйте еще раз!");
+                            Console.ResetColor();
+                            Console.Write("\nВведите имя и фамилию или никнейм:\t");
+                            nameCheck = Console.ReadLine();
+                            Console.Write("\nВведите ваш номер телефона:\t+7");
+                            phoneCheck = Console.ReadLine();
+                        }
+
+                        if (name == nameCheck && phone == phoneCheck)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine($"\n{name}, мы ждём вас в нашем автоцентре {date} для технического ремонта. До скорой встречи!");
+                            Console.ResetColor();
+                        }
+
+                        break;
+                }
+            }
+
+            else if (userChoice == 4) 
+            {
+                Console.WriteLine("\nНу и зачем вы выбрали этот секретный пункт? Тут вы можете зачем-то выбрать цвет консоли , кроме красного\n\t yellow / green / blue / gray");
+                userColor = Console.ReadLine();
+
+                    switch (userColor)
+                    {
+                        case "yellow":
+                            Console.Clear();
+                            Console.ForegroundColor = ConsoleColor.Black;
+                            Console.BackgroundColor = ConsoleColor.Yellow;
+                            Console.WriteLine("Вот это красотище теперь!");
+                            break;
+                        case "green":
+                            Console.Clear();
+                            Console.BackgroundColor = ConsoleColor.Green;
+                            Console.WriteLine("Вот это красотище теперь!");
+                            break;
+                        case "blue":
+                            Console.Clear();
+                            Console.BackgroundColor = ConsoleColor.Blue;
+                            Console.WriteLine("Вот это красотище теперь!");
+                            break;
+                        case "red":
+                            Console.Write("\nВведите имя и фамилию или никнейм:\t");
+                            nameCheck = Console.ReadLine();
+                            Console.Write("\nВведите ваш номер телефона:\t+7");
+                            phoneCheck = Console.ReadLine();
+
+                            while (name != nameCheck || phone != phoneCheck)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("\nАвторизация не пройдена, попробуйте еще раз!");
+                                Console.ResetColor();
+                                Console.Write("\nВведите имя и фамилию или никнейм:\t");
+                                nameCheck = Console.ReadLine();
+                                Console.Write("\nВведите ваш номер телефона:\t+7");
+                                phoneCheck = Console.ReadLine();
+                            }
+
+                            if (name == nameCheck && phone == phoneCheck)
+                            {
+                                Console.Clear();
+                                Console.BackgroundColor = ConsoleColor.Red;
+                                Console.WriteLine($"Вот это вы, {name}, конечно, молодец, команда активации ядерного чемоданчика запущена, благодаря вам. До скорой встречи!");
+                            }
+
+                            break;
+                    }
+            }
+        }
+    }
+}
