@@ -9,23 +9,21 @@ namespace nameSymbol
             string name;
             char symbol;
             int addSymbol = 2;
+            string lineSymbol = "";
 
-            Console.Write("\nwrite a name or other word:\t");
+            Console.Write("\nWrite a name or other word:\t");
             name = Console.ReadLine();
             Console.Write("\nEnter a symbol:\t\t\t");
             symbol = Convert.ToChar(Console.ReadLine());
 
             for (int i = 0; i < name.Length + addSymbol; i++)
             {
-                Console.Write(symbol);
+                lineSymbol += symbol;
             }
 
-            Console.WriteLine("\n" + symbol + name + symbol);
-
-            for (int i = 0; i < name.Length + addSymbol; i++)
-            {
-                Console.Write(symbol);
-            }
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine(lineSymbol + "\n" + symbol + name + symbol + "\n" + lineSymbol);
+            Console.ResetColor();
         }
     }
 }
