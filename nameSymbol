@@ -1,0 +1,64 @@
+using System;
+
+namespace nameSymbol
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string name;
+            string symbol;
+            int addSymbol = 2;
+            int lenghtSymbol = 1;
+            string exit = "exit";
+
+            Console.WriteLine("\nWrite name and symbol as \"exit\" to exit or");
+            Console.Write("\nwrite a name or other word:\t");
+            name = Console.ReadLine();
+            Console.Write("\nEnter a symbol:\t\t\t");
+            symbol = Console.ReadLine();
+
+            while (name != exit && symbol != exit )
+            {
+
+                if (symbol.Length > lenghtSymbol)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\nEnter only one symbol!");
+                    Console.ResetColor();
+                    Console.Write("\nWrite a name or other word:\t");
+                    name = Console.ReadLine();
+                    Console.Write("\nEnter a symbol:\t\t\t");
+                    symbol = Console.ReadLine();
+                }
+
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+
+                    for (int i = 0; i < name.Length + addSymbol; i++)
+                    {
+                        Console.Write(symbol);
+                    }
+
+                    Console.WriteLine("\n" + symbol + name + symbol);
+
+                    for (int i = 0; i < name.Length + addSymbol; i++)
+                    {
+                        Console.Write(symbol);
+                    }
+
+                    Console.ResetColor();
+                    Console.Write("\nWrite a name or other word:\t");
+                    name = Console.ReadLine();
+                    Console.Write("\nEnter a symbol:\t\t\t");
+                    symbol = Console.ReadLine();
+                }
+            }
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Good Luck!");
+            Console.ResetColor();
+        }
+    }
+}
