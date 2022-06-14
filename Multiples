@@ -1,0 +1,28 @@
+using System;
+
+namespace Multiples
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Random rand = new Random();
+            int number = rand.Next(1, 28);
+            int threeDigitMultiplesCount = 0;
+            int maxRangeThreeDigit = 999;
+            int minRangeThreeDigit = 100;
+
+            Console.WriteLine($"random number is {number}");
+
+            for ( int i = 0; i <= maxRangeThreeDigit; i += number )
+            {
+                if ( i >= minRangeThreeDigit)
+                {
+                    threeDigitMultiplesCount += 1;
+                } 
+            }
+
+            Console.WriteLine($"Count of {number} multiples of three-digit numbers is {threeDigitMultiplesCount}");
+        }
+    }
+}
