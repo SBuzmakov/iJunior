@@ -1,0 +1,28 @@
+using System;
+
+namespace ThePowerOf2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int number1 = 2;
+            Random random = new Random();
+            int minRange = 2;
+            int maxRange = 100;
+            int number2 = random.Next(minRange, maxRange);
+            int powerOfNumber1 = 1;
+            int equals = number1;
+
+            Console.WriteLine($"random number is {number2}");
+            
+            for ( int i = number1 ; i <= number2; i *= number1 )
+            {
+                powerOfNumber1++;
+                equals *= number1;
+            }
+
+            Console.WriteLine($" {number1} to the power of {powerOfNumber1} which is greater than random number {number2} and it\'s equals is {equals}");
+        }
+    }
+}
