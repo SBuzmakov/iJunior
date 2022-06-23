@@ -8,7 +8,7 @@ namespace Skobki
         {
             string input;
             int sum = 0;
-            int max = 0;
+            int deep = 0;
 
             Console.WriteLine("введите скобочное выражение");
             input = Console.ReadLine();
@@ -18,12 +18,21 @@ namespace Skobki
                 if (symbol == '(')
                 {
                     sum += 1;
-                    max = sum;
+
+                    if (sum > deep)
+                    {
+                        deep = sum;
+                    }
                 }
 
                 else if (symbol == ')')
                 {
                     sum -= 1;
+
+                    if (sum < 0)
+                    {
+                        break;
+                    }
                 }
 
                 else if (symbol != '(' || symbol != ')')
@@ -31,11 +40,16 @@ namespace Skobki
                     Console.WriteLine("выражение неверное");
                     break;
                 }
+            }
 
-                if (sum == 0)
-                {
-                    Console.WriteLine("максимальная глубина скобочного выражения: " + max + ". Выражение верное");
-                }
+            if (sum == 0)
+            {
+                Console.WriteLine("максимальная глубина скобочного выражения: " + deep + ". Выражение верное");
+            }
+
+            else
+            {
+                Console.WriteLine("выражение неверное");
             }
         }
     }
