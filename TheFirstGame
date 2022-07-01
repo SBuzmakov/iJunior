@@ -1,0 +1,245 @@
+using System;
+
+namespace TheFirstGame
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string heroChoice = "";
+            float playerHealth = 100f;
+            string playerCast;
+            float bossHealth = 1000f;
+            float minionHealth;
+
+            float playerDmg = 15f;
+            float poisonDmg = playerDmg * 1.3f;
+            float fireDmg = playerDmg * 0.7f;
+
+            float bossDmg;
+            int playerExp = 0;
+            Random random = new Random();
+            float minionDmg;
+            int gotExp = random.Next(50, 100);
+            bool dead = false;
+            bool heroSelected = false;
+            int playerLevel = 1;
+            int coeffLevel = 2;
+            int expLevelUp = 100;
+            int leftExp;
+            int coeffHealthPlayer = 100;
+            float healthUpdate = playerHealth;
+            float coeffDmg = 1.2f;
+            float dmgUpdate = playerDmg;
+
+
+
+            while ( heroSelected != true )
+            {
+                Console.WriteLine("выберите персонажа : witch - ведьма. fairy - волшебница");
+                heroChoice = Console.ReadLine();
+
+                switch (heroChoice)
+                {
+                    case "witch":
+                        Console.WriteLine("\nведьма poison fire");
+                        heroChoice = "witch";
+                        heroSelected = true;
+                        break;
+
+                    case "fairy":
+                        Console.WriteLine("\nволшебница");
+                        heroSelected = true;
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            string namePlayer = heroChoice;
+
+            while (bossHealth >= 0 && dead != true )
+            {
+                leftExp = expLevelUp - playerExp;
+                playerHealth = healthUpdate;
+                playerDmg = dmgUpdate;
+                Console.WriteLine( namePlayer + " " + playerLevel + " уровня, " + playerHealth + " очков здоровья, до следующего уровня персонажа нужно получить " + leftExp + " опыта.");
+                Console.WriteLine("\nкуда? 1 - кач. 2 - босс");
+
+                string locationChoice = Console.ReadLine();
+
+                switch (locationChoice)
+                {
+                    case "1":
+                        Console.WriteLine("\nкач");
+                        minionHealth = random.Next(50,100);
+                        Console.WriteLine("\nСхватка с миньоном с " + minionHealth + " здоровья.");
+
+                        for ( int i = 0; minionHealth > 0; i++)
+                        {
+                            Console.WriteLine("\nпроизнесите заклинание:");
+
+                            playerCast = Console.ReadLine();
+
+                            switch (playerCast)
+                            {
+                                case "poison":
+
+                                    if ( heroChoice == "witch")
+                                    {
+                                        minionHealth -= poisonDmg;
+                                        if ( minionHealth <= 0 )
+                                        {
+                                            break;
+                                        }
+                                        Console.ForegroundColor = ConsoleColor.Green;
+                                        Console.WriteLine("\nвы наносите " + poisonDmg + " урона. У врага осталось " + minionHealth + " здоровья");
+                                        Console.ResetColor();
+                                    }
+
+                                    else
+                                    {
+                                        Console.WriteLine("\nвы произносите чушь и не наносите урона");
+                                    }
+
+                                    break;
+                                case "fire":
+                                    if (heroChoice == "witch")
+                                    {
+                                        minionHealth -= fireDmg;
+                                        Console.ForegroundColor = ConsoleColor.Yellow;
+                                        Console.WriteLine("\nвы наносите " + fireDmg + " урона. У врага осталось " + minionHealth + " здоровья");
+                                        Console.ResetColor();
+                                    }
+
+                                    else
+                                    {
+                                        Console.WriteLine("\nвы произносите чушь и не наносите урона");
+                                    }
+
+                                    break;
+                                default:
+                                    Console.WriteLine("\nвы произносите чушь и не наносите урона");
+                                    break;
+                            }
+
+                            minionDmg = random.Next(15, 25);
+                            playerHealth -= minionDmg;
+
+                            if (playerHealth <= 0)
+                            {
+                                Console.WriteLine("\nвы в глубоком нокауте ");
+                                break;
+                            }
+
+                            else if ( minionHealth <= 0 )
+                            {
+                                playerExp += gotExp;
+                                Console.ForegroundColor = ConsoleColor.Cyan;
+                                Console.WriteLine("\nвы победили и получаете " + gotExp + " очков опыта. Ваш опыт теперь " + playerExp);
+                                Console.ResetColor();
+                            }
+
+                            else
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("\nвы получаете " + minionDmg + " урона. У вас осталось " + playerHealth + " здоровья");
+                                Console.ResetColor();
+                            }
+                        }
+                        break;
+
+                    case "2":
+                        Console.WriteLine("\nсхватка с боссом");
+
+                        for (int i = 0; bossHealth > 0; i++)
+                        {
+                            Console.WriteLine("\nпроизнесите заклинание:");
+
+                            playerCast = Console.ReadLine();
+
+                            switch (playerCast)
+                            {
+                                case "poison":
+
+                                    if (heroChoice == "witch")
+                                    {
+                                        poisonDmg = playerDmg + 5f;
+                                        bossHealth -= poisonDmg;
+                                        Console.ForegroundColor = ConsoleColor.Green;
+                                        Console.WriteLine("\nвы наносите " + poisonDmg + " урона. У врага осталось " + bossHealth + " здоровья");
+                                        Console.ResetColor();
+                                    }
+
+                                    else
+                                    {
+                                        Console.WriteLine("\nвы произносите чушь и не наносите урона");
+                                    }
+
+                                    break;
+                                case "fire":
+                                    if (heroChoice == "witch")
+                                    {
+                                        fireDmg = playerDmg - 5;
+                                        bossHealth -= fireDmg;
+                                        Console.ForegroundColor = ConsoleColor.Yellow;
+                                        Console.WriteLine("\nвы наносите " + fireDmg + " урона. У врага осталось " + bossHealth + " здоровья");
+                                        Console.ResetColor();
+                                    }
+
+                                    else
+                                    {
+                                        Console.WriteLine("\nвы произносите чушь и не наносите урона");
+                                    }
+
+                                    break;
+                                default:
+                                    Console.WriteLine("\nвы произносите чушь и не наносите урона");
+                                    break;
+                            }
+
+                            bossDmg = random.Next(50, 75);
+                            playerHealth -= bossDmg;
+
+                            if (playerHealth <= 0)
+                            {
+                                Console.ForegroundColor = ConsoleColor.DarkGray;
+                                Console.WriteLine("\nВальxалла приветствует павшего воина ");
+                                dead = true;
+                                break;
+                            }
+
+                            else if (bossHealth <= 0)
+                            {
+                                playerExp += gotExp;
+                                Console.ForegroundColor = ConsoleColor.Cyan;
+                                Console.WriteLine("\nвы победили и получаете " + gotExp + " очков опыта. Ваш опыт теперь " + playerExp);
+                                Console.ResetColor();
+                            }
+
+                            else
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("\nвы получаете " + bossDmg + " урона. У вас осталось " + playerHealth + " здоровья");
+                                Console.ResetColor();
+                            }                      
+                        }
+                        break;
+                }
+
+                if ( playerExp >= expLevelUp)
+                {
+                    playerLevel++;
+                    Console.Write("\nПоздравляем, ваш персонаж достиг ");
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.Write(playerLevel);
+                    Console.ResetColor();
+                    Console.Write(" уровня! Вы стали сильнее, но и враги не дремлют!\n");
+                    expLevelUp *= coeffLevel;
+                    healthUpdate += coeffHealthPlayer;
+                    dmgUpdate *= coeffDmg;
+                } 
+            }
+        }
+    }
+}
