@@ -164,7 +164,6 @@ namespace TheFirstGame
 
                                     if (heroChoice == "witch")
                                     {
-                                        poisonDmg = playerDmg + 5f;
                                         bossHealth -= poisonDmg;
                                         Console.ForegroundColor = ConsoleColor.Green;
                                         Console.WriteLine("\nвы наносите " + poisonDmg + " урона. У врага осталось " + bossHealth + " здоровья");
