@@ -237,9 +237,27 @@ namespace TheFirstGame
 
             if (namePlayer == "Трисс Меригольд")
             {
-                coeffExpUpg = 10f;
+                coeffExpUpg = 5f;
                 goodsCost = 50;
                 Console.WriteLine("Fair Play mode OFF.");
+                Console.ForegroundColor = Console.BackgroundColor;
+                Console.ReadKey();
+                Console.ResetColor();
+                Console.Clear();
+            }
+
+            if (namePlayer == "Йэннифер")
+            {
+                coeffExpUpg = 15f;
+                cureValue = 100;
+                potionValue = 100;
+                essentionValue = 100;
+                playerLevel = 8;
+                playerMana = 10000f;
+                manaUpdate = playerMana;
+                playerHealth = 10000f;
+                healthUpdate = playerHealth;
+                Console.WriteLine("Game Master mode ON.");
                 Console.ForegroundColor = Console.BackgroundColor;
                 Console.ReadKey();
                 Console.ResetColor();
@@ -344,6 +362,7 @@ namespace TheFirstGame
                     Console.ForegroundColor = Console.BackgroundColor;
                     Console.ReadKey();
                     Console.ResetColor();
+
                     if (heroChoice == "ведьма")
                     {
 
@@ -477,7 +496,7 @@ namespace TheFirstGame
                     shieldUpdate *= coeffShieldUpg;
                     manaUpdate *= coeffManaUpg;
                     manaRecovery *= coeffManaRecovery;
-                    coeffExpUpg += 0.2f;
+                    coeffExpUpg += 0.3f;
                     coeffBossHealthUpg *= 1.4f;
                     coeffBossDmgUpg *= 1.4f;
                     coeffMinionDmgUpg *= 1.3f;
@@ -621,7 +640,7 @@ namespace TheFirstGame
                                 case "3":
                                     if (goldValue >= goodsCost)
                                     {
-                                        cureValue++;
+                                        essentionValue++;
                                         goldValue -= goodsCost;
                                         Console.WriteLine("\nКуплена эссенция.");
                                         Console.ForegroundColor = Console.BackgroundColor;
@@ -714,7 +733,7 @@ namespace TheFirstGame
                             Console.ResetColor();
                             rateCriticalMiss = random.Next(0, 11);
 
-                            if (rateCriticalMiss < 1 && playerCast != "подсказка")
+                            if (rateCriticalMiss < 1 && playerCast != "подсказка" && playerCast != "выпить лекарство" && playerCast != "выпить зелье" && playerCast != "вдохнуть эссенцию")
                             {
                                 coeffCrit = critDmg;
                                 Console.ForegroundColor = ConsoleColor.Cyan;
@@ -722,7 +741,7 @@ namespace TheFirstGame
                                 Console.ResetColor();
                             }
 
-                            else if (rateCriticalMiss > 9 && playerCast != "подсказка")
+                            else if (rateCriticalMiss > 9 && playerCast != "подсказка" && playerCast != "выпить лекарство" && playerCast != "выпить зелье" && playerCast != "вдохнуть эссенцию")
                             {
                                 coeffCrit = missDmg;
                                 Console.ForegroundColor = ConsoleColor.DarkRed;
@@ -828,7 +847,7 @@ namespace TheFirstGame
                                     mixElementComboOn = false;
                                     randomDmg = random.Next(8, 13) / 10f;
                                     lowSpellDmg = playerDmg * coeffLowSpell * coeffCrit * randomDmg;
-                                    lowSpellDmg = Convert.ToInt32(lowestSpellDmg);
+                                    lowSpellDmg = Convert.ToInt32(lowSpellDmg);
 
                                     if (heroChoice == "ведьма" && playerMana >= lowSpellMana)
                                     {
@@ -1121,7 +1140,7 @@ namespace TheFirstGame
                                         playerMana -= ultraSpellMana;
                                         randomDmg = random.Next(8, 13) / 10f;
                                         ultraSpellDmg = playerDmg * coeffUltra * coeffCrit * randomDmg;
-                                        lowestSpellDmg = Convert.ToInt32(ultraSpellDmg);
+                                        ultraSpellDmg = Convert.ToInt32(ultraSpellDmg);
 
                                         Console.BackgroundColor = ConsoleColor.Magenta;
                                         Console.WriteLine("");
@@ -1187,7 +1206,7 @@ namespace TheFirstGame
                                                 }
 
                                                 Console.ForegroundColor = ConsoleColor.DarkGray;
-                                                Console.WriteLine("\nDы наносите " + ultraSpellDmg + " урона в физическую броню. У врага осталось " + minionHealth + " здоровья, физической брони больше нет!");
+                                                Console.WriteLine("\nВы наносите " + ultraSpellDmg + " урона в физическую броню. У врага осталось " + minionHealth + " здоровья, физической брони больше нет!");
                                                 Console.ResetColor();
                                                 break;
                                             }
@@ -1195,7 +1214,7 @@ namespace TheFirstGame
                                             else if (physShield >= 1)
                                             {
                                                 Console.ForegroundColor = ConsoleColor.DarkGray;
-                                                Console.WriteLine("\nвы наносите " + ultraSpellDmg + " урона в физическую броню. У врага осталось еще " + physShield + " физической брони");
+                                                Console.WriteLine("\nВы наносите " + ultraSpellDmg + " урона в физическую броню. У врага осталось еще " + physShield + " физической брони");
                                                 Console.ResetColor();
                                             }
                                         }
@@ -1799,9 +1818,6 @@ namespace TheFirstGame
 
                                         Console.ForegroundColor = ConsoleColor.Magenta;
                                         Console.WriteLine("\nВы открываете флакончик с ароматной красной жидкостью, быстро и жадно выпиваете до дна. Чувство прилива здоровья охватывает вас мгновенно");
-                                        Console.ForegroundColor = Console.BackgroundColor;
-                                        Console.ReadKey();
-                                        Console.ResetColor();
                                     }
 
                                     else
@@ -1822,9 +1838,6 @@ namespace TheFirstGame
 
                                         Console.ForegroundColor = ConsoleColor.Magenta;
                                         Console.WriteLine("\nВы открываете флакончик с вонючей синей жидкостью, быстро и жадно выпиваете до дна. Чувство прилива маны охватывает вас мгновенно");
-                                        Console.ForegroundColor = Console.BackgroundColor;
-                                        Console.ReadKey();
-                                        Console.ResetColor();
                                     }
 
                                     else
@@ -1845,9 +1858,6 @@ namespace TheFirstGame
 
                                         Console.ForegroundColor = ConsoleColor.Magenta;
                                         Console.WriteLine("\nВы открываете флакончик с Божественной Эссенцией, быстро и жадно вдыхаете её пары. Чувство прилива Божественной брони охватывает вас мгновенно");
-                                        Console.ForegroundColor = Console.BackgroundColor;
-                                        Console.ReadKey();
-                                        Console.ResetColor();
                                     }
 
                                     else
@@ -1987,7 +1997,7 @@ namespace TheFirstGame
 
                                     else if (playerCast == "увернуться" && rateCriticalMiss <= 6)
                                     {
-                                        Console.ForegroundColor = ConsoleColor.DarkCyan;
+                                        Console.ForegroundColor = ConsoleColor.DarkRed;
                                         Console.WriteLine("\tУ вас не получается увернуться от атаки врага!");
                                         Console.ResetColor();
 
@@ -2169,7 +2179,7 @@ namespace TheFirstGame
                             Console.ResetColor();
                             rateCriticalMiss = random.Next(0, 11);
 
-                            if (rateCriticalMiss < 1 && playerCast != "подсказка" && bossSkillSnakesEnabled == false)
+                            if (rateCriticalMiss < 1 && playerCast != "подсказка" && playerCast != "выпить лекарство" && playerCast != "выпить зелье" && playerCast != "вдохнуть эссенцию" && bossSkillSnakesEnabled == false)
                             {
                                 coeffCrit = critDmg;
                                 Console.ForegroundColor = ConsoleColor.Cyan;
@@ -2177,7 +2187,7 @@ namespace TheFirstGame
                                 Console.ResetColor();
                             }
 
-                            else if (rateCriticalMiss > 9 && playerCast != "подсказка" && bossSkillSnakesEnabled == false)
+                            else if (rateCriticalMiss > 9 && playerCast != "подсказка" && playerCast != "выпить лекарство" && playerCast != "выпить зелье" && playerCast != "вдохнуть эссенцию" && bossSkillSnakesEnabled == false)
                             {
                                 coeffCrit = missDmg;
                                 Console.ForegroundColor = ConsoleColor.DarkRed;
@@ -2187,7 +2197,7 @@ namespace TheFirstGame
 
                             if (bossSkillSnakesEnabled)
                             {
-                                bossSkillFireEnabled = false;
+                                bossSkillSnakesEnabled = false;
                                 Console.ForegroundColor = ConsoleColor.DarkRed;
                                 Console.WriteLine("Змеи Ёрмунганда обхватили вас своей мертвой хваткой, вы не можете ни вдохнуть , ни произнести заклинание!");
                                 Console.ResetColor();
@@ -2656,7 +2666,7 @@ namespace TheFirstGame
                                                     }
 
                                                     Console.ForegroundColor = ConsoleColor.DarkGray;
-                                                    Console.WriteLine("\nDы наносите " + ultraSpellDmg + " урона в физическую броню. У врага осталось " + bossHealth + " здоровья, физической брони больше нет!");
+                                                    Console.WriteLine("\nВы наносите " + ultraSpellDmg + " урона в физическую броню. У врага осталось " + bossHealth + " здоровья, физической брони больше нет!");
                                                     Console.ResetColor();
                                                     break;
                                                 }
@@ -2664,7 +2674,7 @@ namespace TheFirstGame
                                                 else if (physShield >= 1)
                                                 {
                                                     Console.ForegroundColor = ConsoleColor.DarkGray;
-                                                    Console.WriteLine("\nвы наносите " + ultraSpellDmg + " урона в физическую броню. У врага осталось еще " + physShield + " физической брони");
+                                                    Console.WriteLine("\nВы наносите " + ultraSpellDmg + " урона в физическую броню. У врага осталось еще " + physShield + " физической брони");
                                                     Console.ResetColor();
                                                 }
                                             }
@@ -3268,9 +3278,6 @@ namespace TheFirstGame
 
                                             Console.ForegroundColor = ConsoleColor.Magenta;
                                             Console.WriteLine("\nВы открываете флакончик с ароматной красной жидкостью, быстро и жадно выпиваете до дна. Чувство прилива здоровья охватывает вас мгновенно");
-                                            Console.ForegroundColor = Console.BackgroundColor;
-                                            Console.ReadKey();
-                                            Console.ResetColor();
                                         }
 
                                         else
@@ -3291,9 +3298,6 @@ namespace TheFirstGame
 
                                             Console.ForegroundColor = ConsoleColor.Magenta;
                                             Console.WriteLine("\nВы открываете флакончик с вонючей синей жидкостью, быстро и жадно выпиваете до дна. Чувство прилива маны охватывает вас мгновенно");
-                                            Console.ForegroundColor = Console.BackgroundColor;
-                                            Console.ReadKey();
-                                            Console.ResetColor();
                                         }
 
                                         else
@@ -3314,9 +3318,6 @@ namespace TheFirstGame
 
                                             Console.ForegroundColor = ConsoleColor.Magenta;
                                             Console.WriteLine("\nВы открываете флакончик с Божественной Эссенцией, быстро и жадно вдыхаете её пары. Чувство прилива Божественной брони охватывает вас мгновенно");
-                                            Console.ForegroundColor = Console.BackgroundColor;
-                                            Console.ReadKey();
-                                            Console.ResetColor();
                                         }
 
                                         else
@@ -3531,7 +3532,7 @@ namespace TheFirstGame
                                         else if (randomBossSkill == 1)
                                         {
                                             bossMana -= bossSkillMana;
-                                            bossSkillFireEnabled = true;
+                                            bossSkillSnakesEnabled = true;
                                             Console.BackgroundColor = ConsoleColor.DarkGreen;
                                             Console.WriteLine("Ёрмунганд тратя силы свей маны, призывает несколько змей которые обвивают все ваше тело");
                                             Console.ForegroundColor = Console.BackgroundColor;
@@ -3566,7 +3567,7 @@ namespace TheFirstGame
 
                                     else if (playerCast == "увернуться" && rateCriticalMiss <= 6)
                                     {
-                                        Console.ForegroundColor = ConsoleColor.DarkCyan;
+                                        Console.ForegroundColor = ConsoleColor.DarkRed;
                                         Console.WriteLine("\tУ вас не получается увернуться от атаки врага!");
                                         Console.ResetColor();
 
@@ -3591,7 +3592,7 @@ namespace TheFirstGame
 
 
 
-                                    if (playerShield >= 1 && bossSkillFireEnabled == false)
+                                    if (playerShield >= 1 && bossSkillFireEnabled == false && bossSkillSnakesEnabled == false)
                                     {
                                         playerShield -= Convert.ToInt32(bossDmg);
 
@@ -3612,13 +3613,19 @@ namespace TheFirstGame
                                         }
                                     }
 
-                                    else if (playerShield < 1 && playerHealth >= 1 && bossSkillFireEnabled == false)
+                                    else if (playerShield < 1 && playerHealth >= 1 && bossSkillFireEnabled == false && bossSkillSnakesEnabled == false)
                                     {
                                         playerHealth -= Convert.ToInt32(bossDmg);
                                         if (playerHealth < 1)
                                         {
                                             Console.ForegroundColor = ConsoleColor.Red;
                                             Console.WriteLine("\nвам нанесёнo " + bossDmg + " урона.\nВЫ УМЕРЛИ");
+                                            Console.ForegroundColor = Console.BackgroundColor;
+                                            Console.ReadKey();
+                                            Console.ResetColor();
+                                            Console.Clear();
+                                            Console.ForegroundColor = ConsoleColor.DarkGray;
+                                            Console.WriteLine("\nБог Óдин:\n\t -" + namePlayer + ", Вальхалла приветстует храбрую воительницу, павшую в бою !");
                                             Console.ForegroundColor = Console.BackgroundColor;
                                             Console.ReadKey();
                                             Console.ResetColor();
@@ -3634,10 +3641,16 @@ namespace TheFirstGame
                                         }
                                     }
 
-                                    if (playerHealth < 1 && bossSkillFireEnabled == false)
+                                    if (playerHealth < 1 && bossSkillFireEnabled == false && bossSkillSnakesEnabled == false)
                                     {
                                         Console.ForegroundColor = ConsoleColor.Red;
                                         Console.WriteLine("\nвам нанесёнo " + bossDmg + " урона.\nВЫ УМЕРЛИ");
+                                        Console.ForegroundColor = Console.BackgroundColor;
+                                        Console.ReadKey();
+                                        Console.ResetColor();
+                                        Console.Clear();
+                                        Console.ForegroundColor = ConsoleColor.DarkGray;
+                                        Console.WriteLine("\nБог Óдин:\n\t -" + namePlayer + ", Вальхалла приветстует храбрую воительницу, павшую в бою !");
                                         Console.ForegroundColor = Console.BackgroundColor;
                                         Console.ReadKey();
                                         Console.ResetColor();
