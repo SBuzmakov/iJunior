@@ -214,12 +214,6 @@ namespace TheBossFight
 
                     bossSkillFireEnabled = false;
 
-                                                if (ultraComboOff == true)
-                            {
-                                ultraComboOn = false;
-                                ultraComboOff = false;
-                            }
-
                             if (mixElementComboOff == true)
                             {
                                 mixElementComboOn = false;
