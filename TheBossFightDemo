@@ -20,10 +20,8 @@ namespace TheBossFight
             float highSpellMana = 350f;
             float lowSpellMana = 100f;
             float ultraSpellMana = 4000f;
-            float healthUpdate = playerHealth;
             float damageUpdate = playerDamage;
             float playerShield = 5000f;
-            float shieldUpdate = playerShield;
             float playerMana = 5000f;
             float manaUpdate = playerMana;
             float manaRecovery = 0.05f;
