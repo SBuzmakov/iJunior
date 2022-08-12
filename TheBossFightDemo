@@ -24,7 +24,7 @@ namespace TheBossFight
             float playerShield = 5000f;
             float playerMana = 5000f;
             float manaUpdate = playerMana;
-            float manaRecovery = 0.05f;
+            float ratioManaRecovery = 0.05f;
             float randomDamage = 0f;
             float ratioHighestSpell = 1.9f;
             float ratioLowSpell = 0.9f;
@@ -48,6 +48,7 @@ namespace TheBossFight
             float randomBossSkill = 0f;
             string nameBoss = "";
             int chanceBossSkill = 5;
+            float manaRecovery = manaUpdate * ratioManaRecovery;
 
             Console.WriteLine("Ваши заклинания и команды:\n\n");
             Console.WriteLine("увернуться \nвыпить лекарство \nвыпить зелье \nвдохнуть эссенцию " +
@@ -88,7 +89,7 @@ namespace TheBossFight
                 {
                     if (playerMana < manaUpdate && canAttack == true)
                     {
-                        playerMana += manaUpdate * manaRecovery;
+                        playerMana += manaRecovery;
 
                         if (playerMana > manaUpdate)
                         {
@@ -96,7 +97,7 @@ namespace TheBossFight
                         }
 
                         Console.ForegroundColor = ConsoleColor.Blue;
-                        Console.WriteLine("\n\n\nмана восстанавливается на " + manaUpdate * manaRecovery);
+                        Console.WriteLine("\n\n\nмана восстанавливается на " + manaRecovery);
                         Console.ResetColor();
                     }
 
@@ -116,7 +117,7 @@ namespace TheBossFight
                     Console.ForegroundColor = ConsoleColor.Blue;
                     Console.WriteLine("\n####АТАКА#" + (i + 1) + "##############################################################################################");
                     Console.WriteLine("\n " + namePlayer + ": " + playerHealth + " очков здоровья, " + playerMana + " маны, " + playerShield + " Божественной брони." +
-                        "\nКаждый ход мана восстанавливается на " + manaUpdate * manaRecovery +
+                        "\nКаждый ход мана восстанавливается на " + manaUpdate * ratioManaRecovery +
                         " \n" + nameBoss + ": " + bossHealth + " здоровья. " + magicShield + " магической брони. " + physicalShield + " физической брони." + bossMana + " маны.");
                     Console.ResetColor();
                     Console.WriteLine("____________________________________________________________________________");
