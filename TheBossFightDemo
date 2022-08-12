@@ -115,7 +115,7 @@ namespace TheBossFight
 
                     Console.ForegroundColor = ConsoleColor.Blue;
                     Console.WriteLine("\n####АТАКА#" + (i + 1) + "##############################################################################################");
-                    Console.WriteLine("\n " + namePlayer + ": " + playerHealth + "/" + healthUpdate + " очков здоровья, " + playerMana + "/" + manaUpdate + " маны, " + playerShield + "/" + shieldUpdate + " Божественной брони." +
+                    Console.WriteLine("\n " + namePlayer + ": " + playerHealth + "/" + playerHealth + " очков здоровья, " + playerMana + "/" + manaUpdate + " маны, " + playerShield + "/" + playerShield + " Божественной брони." +
                         "\nКаждый ход мана восстанавливается на " + manaUpdate * manaRecovery +
                         " \n" + nameBoss + ": " + bossHealth + " здоровья. " + magicShield + " магической брони. " + physicalShield + " физической брони." + bossMana + " маны.");
                     Console.ResetColor();
