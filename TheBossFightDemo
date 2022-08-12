@@ -25,7 +25,6 @@ namespace TheBossFight
             float playerMana = 5000f;
             float manaUpdate = playerMana;
             float ratioManaRecovery = 0.05f;
-            float randomDamage = 0f;
             float ratioHighestSpell = 1.9f;
             float ratioLowSpell = 0.9f;
             float ratioHighSpell = 1.25f;
@@ -49,10 +48,13 @@ namespace TheBossFight
             string nameBoss = "";
             int chanceBossSkill = 5;
             float manaRecovery = manaUpdate * ratioManaRecovery;
+            float deadlyHealth = 0f;
+            float minimalShield = 1f;
+            int minimumRateRandom = 0;
+            int maximumRateRandom = 11;
 
             Console.WriteLine("Ваши заклинания и команды:\n\n");
-            Console.WriteLine("увернуться \nвыпить лекарство \nвыпить зелье \nвдохнуть эссенцию " +
-                            " \nядолужиум - создать ядовитую лужу. Высокий физический урон. Затраты маны: " + highSpellMana + "" +
+            Console.WriteLine("\nядолужиум - создать ядовитую лужу. Высокий физический урон. Затраты маны: " + highSpellMana + "" +
                             " \nогний - бросить огненный шар. Низкий магический урон. Затраты маны: " + lowSpellMana);
             Console.WriteLine("кобриум - призвать ядовитую змею. Высший физический урон. Затраты маны: " + highestSpellMana);
             Console.WriteLine("лупий - призвать магическую лупу. Низший магический урон. Затраты маны: " + lowestSpellMana);
@@ -85,7 +87,7 @@ namespace TheBossFight
             Console.WriteLine("\nНовая схватка с " + nameBoss + " с " + bossHealth + " здоровья. " + magicShield + " магической брони. " + physicalShield + " физической брони.");
             Console.ResetColor();
 
-            for (int i = 0; bossHealth >= 1 || playerHealth >= 1; i++)
+            for (int i = 0; bossHealth > deadlyHealth || playerHealth > deadlyHealth; i++)
                 {
                     if (playerMana < manaUpdate && canAttack == true)
                     {
@@ -143,8 +145,7 @@ namespace TheBossFight
                             case "кобриум":
                                 ultraComboEnabled = false;
                                 mixElementComboEnabled = false;
-                                randomDamage = random.Next(8, 13) / 10f;
-                                highestSpellDamage = playerDamage * ratioHighestSpell * randomDamage;
+                                highestSpellDamage = playerDamage * ratioHighestSpell;
                                 highestSpellDamage = Convert.ToInt32(highestSpellDamage);
 
                                 if (playerMana >= highestSpellMana)
@@ -156,16 +157,16 @@ namespace TheBossFight
 
                                     playerMana -= highestSpellMana;
 
-                                    if (physicalShield >= 1)
+                                    if (physicalShield >= minimalShield)
                                     {
                                         physicalShield -= highestSpellDamage;
 
-                                        if (physicalShield < 1)
+                                        if (physicalShield < minimalShield)
                                         {
                                             bossHealth += physicalShield;
                                             physicalShield = 0;
 
-                                            if (bossHealth < 1)
+                                            if (bossHealth <= deadlyHealth)
                                             {
                                                 Console.ForegroundColor = ConsoleColor.Green;
                                                 Console.WriteLine("\nВы наносите " + highestSpellDamage + " урона.\nВЫ НАНОСИТЕ СМЕРТЕЛЬНЫЙ УДАР!");
@@ -186,11 +187,11 @@ namespace TheBossFight
                                             Console.ResetColor();
                                         }
                                     }
-                                    else if (physicalShield < 1 && bossHealth >= 1)
+                                    else if (physicalShield < minimalShield && bossHealth > deadlyHealth)
                                     {
                                         bossHealth -= highestSpellDamage;
 
-                                        if (bossHealth < 1)
+                                        if (bossHealth <= deadlyHealth)
                                         {
                                             Console.ForegroundColor = ConsoleColor.DarkGreen;
                                             Console.WriteLine("\nВы наносите " + highestSpellDamage + " урона.\nВЫ НАНОСИТЕ СМЕРТЕЛЬНЫЙ УДАР!");
@@ -216,8 +217,7 @@ namespace TheBossFight
                             case "огний":
                                 ultraComboEnabled = true;
                                 mixElementComboEnabled = false;
-                                randomDamage = random.Next(8, 13) / 10f;
-                                lowSpellDamage = playerDamage * ratioLowSpell * randomDamage;
+                                lowSpellDamage = playerDamage * ratioLowSpell;
                                 lowSpellDamage = Convert.ToInt32(lowSpellDamage);
 
                                 if (playerMana >= lowSpellMana)
@@ -228,16 +228,16 @@ namespace TheBossFight
 
                                     playerMana -= lowSpellMana;
 
-                                    if (magicShield >= 1)
+                                    if (magicShield >= minimalShield)
                                     {
                                         magicShield -= lowSpellDamage;
 
-                                        if (magicShield < 1)
+                                        if (magicShield < minimalShield)
                                         {
                                             bossHealth += magicShield;
                                             magicShield = 0;
 
-                                            if (bossHealth < 1)
+                                            if (bossHealth <= deadlyHealth)
                                             {
                                                 Console.ForegroundColor = ConsoleColor.DarkYellow;
                                                 Console.WriteLine("\nВы наносите " + lowSpellDamage + " урона.\nВЫ НАНОСИТЕ СМЕРТЕЛЬНЫЙ УДАР!");
@@ -257,11 +257,11 @@ namespace TheBossFight
                                             Console.ResetColor();
                                         }
                                     }
-                                    else if (magicShield < 1 && bossHealth >= 1)
+                                    else if (magicShield < minimalShield && bossHealth > deadlyHealth)
                                     {
                                         bossHealth -= lowSpellDamage;
 
-                                        if (bossHealth < 1)
+                                        if (bossHealth <= deadlyHealth)
                                         {
                                             Console.ForegroundColor = ConsoleColor.DarkYellow;
                                             Console.WriteLine("\nВы наносите " + lowSpellDamage + " урона.\nВЫ НАНОСИТЕ СМЕРТЕЛЬНЫЙ УДАР!");
@@ -287,8 +287,7 @@ namespace TheBossFight
                             case "ядолужиум":
                                 ultraComboEnabled = false;
                                 mixElementComboEnabled = true;
-                                randomDamage = random.Next(8, 13) / 10f;
-                                highSpellDamage = playerDamage * ratioHighSpell * randomDamage;
+                                highSpellDamage = playerDamage * ratioHighSpell;
                                 highSpellDamage = Convert.ToInt32(highSpellDamage);
 
                                 if (playerMana >= highSpellMana)
@@ -300,16 +299,16 @@ namespace TheBossFight
 
                                     playerMana -= highSpellMana;
 
-                                    if (physicalShield >= 1)
+                                    if (physicalShield >= minimalShield)
                                     {
                                         physicalShield -= highSpellDamage;
 
-                                        if (physicalShield < 1)
+                                        if (physicalShield < minimalShield)
                                         {
                                             bossHealth += physicalShield;
                                             physicalShield = 0;
 
-                                            if (bossHealth < 1)
+                                            if (bossHealth <= deadlyHealth)
                                             {
                                                 Console.ForegroundColor = ConsoleColor.Green;
                                                 Console.WriteLine("\nВы наносите " + highSpellDamage + " урона.\nВЫ НАНОСИТЕ СМЕРТЕЛЬНЫЙ УДАР!!");
@@ -329,11 +328,11 @@ namespace TheBossFight
                                             Console.ResetColor();
                                         }
                                     }
-                                    else if (physicalShield < 1 && bossHealth >= 1)
+                                    else if (physicalShield < minimalShield && bossHealth > deadlyHealth)
                                     {
                                         bossHealth -= highSpellDamage;
 
-                                        if (bossHealth < 1)
+                                        if (bossHealth <= deadlyHealth)
                                         {
                                             Console.ForegroundColor = ConsoleColor.Green;
                                             Console.WriteLine("\nВы наносите " + highSpellDamage + " урона.\nВЫ НАНОСИТЕ СМЕРТЕЛЬНЫЙ УДАР!!");
@@ -358,8 +357,7 @@ namespace TheBossFight
                                 break;
                             case "лупий":
                                 ultraComboEnabled = false;
-                                randomDamage = random.Next(8, 13) / 10f;
-                                lowestSpellDamage = playerDamage * ratioLowestSpell * randomDamage;
+                                lowestSpellDamage = playerDamage * ratioLowestSpell;
                                 lowestSpellDamage = Convert.ToInt32(lowestSpellDamage);
 
                                 if (playerMana >= lowestSpellMana)
@@ -406,7 +404,7 @@ namespace TheBossFight
                                         Console.WriteLine("\nВы наносите дополнительный " + lowestSpellDamage + " урон в физическую броню!");
                                         Console.ResetColor();
 
-                                        if (physicalShield < 1)
+                                        if (physicalShield < minimalShield)
                                         {
                                             physicalShield = 0;
                                         }
@@ -416,16 +414,16 @@ namespace TheBossFight
                                     playerMana -= lowestSpellMana;
                                     lowestSpellMana /= ratioMixedMana;
 
-                                    if (magicShield >= 1)
+                                    if (magicShield >= minimalShield)
                                     {
                                         magicShield -= lowestSpellDamage;
 
-                                        if (magicShield < 1)
+                                        if (magicShield < minimalShield)
                                         {
                                             bossHealth += magicShield;
                                             magicShield = 0;
 
-                                            if (bossHealth < 1)
+                                            if (bossHealth <= deadlyHealth)
                                             {
                                                 Console.ForegroundColor = ConsoleColor.Yellow;
                                                 Console.WriteLine("\nВы наносите " + lowestSpellDamage + " урона.\nВЫ НАНОСИТЕ СМЕРТЕЛЬНЫЙ УДАР!!");
@@ -445,11 +443,11 @@ namespace TheBossFight
                                             Console.ResetColor();
                                         }
                                     }
-                                    else if (magicShield < 1 && bossHealth >= 1)
+                                    else if (magicShield < minimalShield && bossHealth > deadlyHealth)
                                     {
                                         bossHealth -= lowestSpellDamage;
 
-                                        if (bossHealth < 1)
+                                        if (bossHealth <= deadlyHealth)
                                         {
                                             Console.ForegroundColor = ConsoleColor.Yellow;
                                             Console.WriteLine("\nВы наносите " + lowestSpellDamage + " урона.\nВЫ НАНОСИТЕ СМЕРТЕЛЬНЫЙ УДАР!!");
@@ -478,8 +476,7 @@ namespace TheBossFight
                                 if (ultraComboEnabled == true && playerMana >= ultraSpellMana)
                                 {
                                     playerMana -= ultraSpellMana;
-                                    randomDamage = random.Next(8, 13) / 10f;
-                                    ultraSpellDamage = playerDamage * ratioUltra * randomDamage;
+                                    ultraSpellDamage = playerDamage * ratioUltra;
                                     ultraSpellDamage = Convert.ToInt32(ultraSpellDamage);
 
                                     Console.BackgroundColor = ConsoleColor.Magenta;
@@ -497,16 +494,16 @@ namespace TheBossFight
                                     Console.WriteLine("");
                                     Console.ResetColor();
 
-                                    if (magicShield >= 1)
+                                    if (magicShield >= minimalShield)
                                     {
                                         magicShield -= ultraSpellDamage;
 
-                                        if (magicShield < 1)
+                                        if (magicShield < minimalShield)
                                         {
                                             bossHealth += magicShield;
                                             magicShield = 0;
 
-                                            if (bossHealth < 1)
+                                            if (bossHealth <= deadlyHealth)
                                             {
                                                 Console.ForegroundColor = ConsoleColor.Magenta;
                                                 Console.WriteLine("\nВы наносите " + ultraSpellDamage + " урона\nВЫ НАНОСИТЕ СМЕРТЕЛЬНЫЙ УДАР!!");
@@ -527,16 +524,16 @@ namespace TheBossFight
                                         }
                                     }
 
-                                    if (physicalShield >= 1)
+                                    if (physicalShield >= minimalShield)
                                     {
                                         physicalShield -= ultraSpellDamage;
 
-                                        if (physicalShield < 1)
+                                        if (physicalShield < minimalShield)
                                         {
                                             bossHealth += physicalShield;
                                             physicalShield = 0;
 
-                                            if (bossHealth < 1)
+                                            if (bossHealth <= deadlyHealth)
                                             {
                                                 Console.ForegroundColor = ConsoleColor.Magenta;
                                                 Console.WriteLine("\nВы наносите " + ultraSpellDamage + " урона.\nВЫ НАНОСИТЕ СМЕРТЕЛЬНЫЙ УДАР!!");
@@ -556,11 +553,11 @@ namespace TheBossFight
                                             Console.ResetColor();
                                         }
                                     }
-                                    else if (magicShield < 1 && physicalShield < 1 && bossHealth >= 1)
+                                    else if (magicShield < minimalShield && physicalShield < minimalShield && bossHealth > deadlyHealth)
                                     {
                                         bossHealth -= ultraSpellDamage;
 
-                                        if (bossHealth < 1)
+                                        if (bossHealth <= deadlyHealth)
                                         {
                                             Console.ForegroundColor = ConsoleColor.Magenta;
                                             Console.WriteLine("\nВы наносите " + ultraSpellDamage + " урона.\nВЫ НАНОСИТЕ СМЕРТЕЛЬНЫЙ УДАР!!");
@@ -609,7 +606,7 @@ namespace TheBossFight
 
                     if (canAttack == true)
                     {
-                        if (bossHealth < 1)
+                        if (bossHealth <= deadlyHealth)
                         {                                    
                             Console.WriteLine(nameBoss + " повержен");
                             Console.ForegroundColor = Console.BackgroundColor;
@@ -623,7 +620,7 @@ namespace TheBossFight
                             Console.WriteLine("____________________________________________________________________________");
                             Console.WriteLine("\n\t\tАтака " + nameBoss + ": ");
 
-                            randomBossSkill = random.Next(0, 11);
+                            randomBossSkill = random.Next(minimumRateRandom, maximumRateRandom);
 
                             if (randomBossSkill <= chanceBossSkill && bossMana >= bossSkillMana)
                             {
@@ -636,8 +633,6 @@ namespace TheBossFight
                                 Console.ResetColor();
                             }
 
-                            randomDamage = random.Next(8, 13) / 10f;
-                            bossDamage *= randomDamage;
                             bossDamage = Convert.ToInt32(bossDamage);
                             bossHealth = Convert.ToInt32(bossHealth);
                             magicShield = Convert.ToInt32(magicShield);
@@ -645,11 +640,11 @@ namespace TheBossFight
                             playerHealth = Convert.ToInt32(playerHealth);
                             playerMana = Convert.ToInt32(playerMana);
 
-                            if (playerShield >= 1)
+                            if (playerShield >= minimalShield)
                             {
                                 playerShield -= Convert.ToInt32(bossDamage);
 
-                                if (playerShield < 1)
+                                if (playerShield < minimalShield)
                                 {
                                     playerHealth += playerShield;
                                     playerShield = 0;
@@ -663,11 +658,11 @@ namespace TheBossFight
                                     Console.ResetColor();
                                 }
                             }
-                            else if (playerShield < 1 && playerHealth >= 1)
+                            else if (playerShield < minimalShield && playerHealth > deadlyHealth)
                             {
                                 playerHealth -= Convert.ToInt32(bossDamage);
 
-                                if (playerHealth < 1)
+                                if (playerHealth <= deadlyHealth)
                                 {
                                     Console.ForegroundColor = ConsoleColor.Red;
                                     Console.WriteLine("\nвам нанесёнo " + bossDamage + " урона.\nВЫ УМЕРЛИ");
@@ -684,7 +679,7 @@ namespace TheBossFight
                                 }
                             }
 
-                            if (playerHealth < 1)
+                            if (playerHealth <= deadlyHealth)
                             {
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 Console.WriteLine("\nвам нанесёнo " + bossDamage + " урона.\nВЫ УМЕРЛИ");
@@ -701,7 +696,21 @@ namespace TheBossFight
                         }
                     }
                 }
+
+            Console.ForegroundColor = Console.BackgroundColor;
+            Console.ReadKey();
+            Console.ResetColor();
+            Console.Clear();
+
+            if (playerHealth <= deadlyHealth)
+            {
+                Console.WriteLine("вы проиграли");
+            }
+            else
+            {
+                Console.WriteLine("вы выиграли");
             }
         }
     }
+}
 
