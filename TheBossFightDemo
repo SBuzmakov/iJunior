@@ -35,34 +35,21 @@ namespace TheBossFight
             float ratioUltra = 12f;
             float ratioMixedSpell = 6f;
             float ratioMixedMana = 15f;
-            float ratioRecoverySkill = 0.4f;
-            bool mixElementComboOn = false;
-            bool mixElementComboOff = false;
-            bool ultraComboOn = false;
-            bool ultraComboOff = false;
+            bool mixElementComboEnabled = false;
+            bool ultraComboEnabled = false;
             string playerCast;
-            bool difficultSelected = false;
-            int rateCriticalMiss = 0;
-            float factorCritical = 1f;
-            float criticalDamage = 1.5f;
-            float missDamage = 0f;
-            float criticalUpdate = 1f;
-            int cureValue = 0;
-            int potionValue = 0;
-            int essentionValue = 0;
             bool canAttack = true;
             float bossHealth = 20000f;
             float bossDamage = 1000f;
             float magicShield = 10000f;
             float physicalShield = 10000f;
             float bossDamageUpdate = bossDamage;
-            bool bossSkillFireEnabled = false;
             bool bossSkillSnakesEnabled = false;
             float bossMana = 5000f;
-            float bossSkillMana = 500f;
+            float bossSkillMana = 1000f;
             float randomBossSkill = 0f;
             string nameBoss = "";
-            string difficult = "";
+            int chanceBossSkill = 5;
 
             Console.WriteLine("Ваши заклинания и команды:\n\n");
             Console.WriteLine("увернуться \nвыпить лекарство \nвыпить зелье \nвдохнуть эссенцию " +
@@ -71,7 +58,6 @@ namespace TheBossFight
             Console.WriteLine("кобриум - призвать ядовитую змею. Высший физический урон. Затраты маны: " + highestSpellMana);
             Console.WriteLine("лупий - призвать магическую лупу. Низший магический урон. Затраты маны: " + lowestSpellMana);
             Console.WriteLine("поджечь ядовитую лужу магической лупой. Высочайший магический урон, дополнительный урон в физическую броню. Затраты маны:  " + lowestSpellMana + lowestSpellMana * ratioMixedMana);
-            Console.WriteLine("манум - сильная прибавка к мане. Значительно уменьшает количество твоего здоровья (-" + healthUpdate * ratioRecoverySkill + ")");
             Console.WriteLine("огний + дэдливайперсмерчиум - призвать дух смертельной гадюки. Ультра урон. Затраты маны:  " + ultraSpellMana);
             
             while (namePlayer == "")
@@ -88,47 +74,11 @@ namespace TheBossFight
                 Console.Clear();
             }
 
-            Console.WriteLine("\n\nВыбери сложность: \n\t\t 1 - легко (много зелий)\n\t\t 2 - средне (немного зелий) \n\t\t 3 - сложно (мало зелий) \n\t\t 4 - хардкор (нет зелий)");
-
-            while (difficultSelected == false)
-            {
-                difficult = Console.ReadLine();
-
-                switch (difficult)
-                {
-                    case "1":
-                        cureValue = 5;
-                        potionValue = 5;
-                        essentionValue = 5;
-                        difficultSelected = true;
-                        break;
-                    case "2":
-                        cureValue = 3;
-                        potionValue = 3;
-                        essentionValue = 3;
-                        difficultSelected = true;
-                        break;
-                    case "3":
-                        cureValue = 1;
-                        potionValue = 1;
-                        essentionValue = 1;
-                        difficultSelected = true;
-                        break;
-                    case "4":
-                        cureValue = 0;
-                        potionValue = 0;
-                        essentionValue = 0;
-                        difficultSelected = true;
-                        break;
-                }
-            }
-
             Console.Clear();
             Console.WriteLine("\n\t " + namePlayer + ", если во время схватки с врагом ты забудешь как действовать, то вместо заклинания произнеси \"подсказка\"!");
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("\n\n\n}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{");
-            Console.WriteLine("\n\tВедьма " + namePlayer + ", " + playerHealth + " очков здоровья, " + playerMana + " маны, " + playerShield + " божественной брони.\n Лекарства : "
-                + cureValue + " шт. Зелья: " + potionValue + " шт. Эссенции: " + essentionValue + " шт.");
+            Console.WriteLine("\n\tВедьма " + namePlayer + ", " + playerHealth + " очков здоровья, " + playerMana + " маны, " + playerShield + " божественной брони.");
             Console.WriteLine("}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{");
             Console.ResetColor();
             Console.ForegroundColor = ConsoleColor.DarkMagenta;
@@ -138,7 +88,7 @@ namespace TheBossFight
 
             for (int i = 0; bossHealth >= 1 || playerHealth >= 1; i++)
                 {
-                    if (playerMana < manaUpdate && canAttack == true && bossSkillFireEnabled == false)
+                    if (playerMana < manaUpdate && canAttack == true)
                     {
                         playerMana += manaUpdate * manaRecovery;
 
@@ -152,18 +102,7 @@ namespace TheBossFight
                         Console.ResetColor();
                     }
 
-                    bossSkillFireEnabled = false;
-
-                    if (mixElementComboOff == true || ultraComboOff == true)
-                    {
-                        mixElementComboOn = false;
-                        mixElementComboOff = false;
-                        ultraComboOn = false;
-                        ultraComboOff = false;
-                    }
-
                     canAttack = true;
-                    factorCritical = criticalUpdate;
                     playerDamage = damageUpdate;
                     bossDamage = bossDamageUpdate;
                     bossHealth = Convert.ToInt32(bossHealth);
@@ -180,8 +119,7 @@ namespace TheBossFight
                     Console.WriteLine("\n####АТАКА#" + (i + 1) + "##############################################################################################");
                     Console.WriteLine("\n " + namePlayer + ": " + playerHealth + "/" + healthUpdate + " очков здоровья, " + playerMana + "/" + manaUpdate + " маны, " + playerShield + "/" + shieldUpdate + " Божественной брони." +
                         "\nКаждый ход мана восстанавливается на " + manaUpdate * manaRecovery +
-                        "\nЛекарства : "
-                        + cureValue + " шт. Зелья: " + potionValue + " шт. Эссенции: " + essentionValue + " шт. \n" + nameBoss + ": " + bossHealth + " здоровья. " + magicShield + " магической брони. " + physicalShield + " физической брони." + bossMana + " маны.");
+                        " \n" + nameBoss + ": " + bossHealth + " здоровья. " + magicShield + " магической брони. " + physicalShield + " физической брони." + bossMana + " маны.");
                     Console.ResetColor();
                     Console.WriteLine("____________________________________________________________________________");
                     Console.WriteLine("\n\t\tВы атакуете , произнесите заклинание!");
@@ -190,22 +128,6 @@ namespace TheBossFight
                     Console.ForegroundColor = ConsoleColor.DarkGray;
                     playerCast = Console.ReadLine();
                     Console.ResetColor();
-                    rateCriticalMiss = random.Next(0, 11);
-
-                    if (rateCriticalMiss < 1 && (playerCast != "подсказка" || playerCast != "выпить лекарство" || playerCast != "выпить зелье" || playerCast != "вдохнуть эссенцию") && bossSkillSnakesEnabled == false)
-                    {
-                        factorCritical = criticalDamage;
-                        Console.ForegroundColor = ConsoleColor.Cyan;
-                        Console.WriteLine("\tВы слышите Божественный голос внутри головы, преисполняетесь боевым духом и наносите критический удар!");
-                        Console.ResetColor();
-                    }
-                    else if (rateCriticalMiss > 9 && (playerCast != "подсказка" || playerCast != "выпить лекарство" || playerCast != "выпить зелье" || playerCast != "вдохнуть эссенцию") && bossSkillSnakesEnabled == false)
-                    {
-                        factorCritical = missDamage;
-                        Console.ForegroundColor = ConsoleColor.DarkRed;
-                        Console.WriteLine("\tВы слышите зловещий шёпот внутри головы, во время произношения заклинания рот становится ватным, и вы промахиваетесь мимо врага!");
-                        Console.ResetColor();
-                    }
 
                     if (bossSkillSnakesEnabled)
                     {
@@ -219,18 +141,11 @@ namespace TheBossFight
 
                         switch (playerCast)
                         {
-                            case "увернуться":
-                                ultraComboOn = false;
-                                mixElementComboOn = false;
-                                Console.ForegroundColor = ConsoleColor.DarkGray;
-                                Console.WriteLine("\nВы пытаетесь увернуться от атаки");
-                                Console.ResetColor();
-                                break;
                             case "кобриум":
-                                ultraComboOn = false;
-                                mixElementComboOn = false;
+                                ultraComboEnabled = false;
+                                mixElementComboEnabled = false;
                                 randomDamage = random.Next(8, 13) / 10f;
-                                highestSpellDamage = playerDamage * ratioHighestSpell * factorCritical * randomDamage;
+                                highestSpellDamage = playerDamage * ratioHighestSpell * randomDamage;
                                 highestSpellDamage = Convert.ToInt32(highestSpellDamage);
 
                                 if (playerMana >= highestSpellMana)
@@ -297,19 +212,13 @@ namespace TheBossFight
                                     Console.WriteLine("\nНЕ ХВАТАЕТ МАНЫ НА ЗАКЛИНАНИЕ!");
                                     Console.ResetColor();
                                 }
-                                else
-                                {
-                                    Console.ForegroundColor = ConsoleColor.DarkRed;
-                                    Console.WriteLine("\nВЫ ПРОИЗНОСИТЕ ЧУШЬ И НЕ НАНОСИТЕ УРОНА!");
-                                    Console.ResetColor();
-                                }
 
                                 break;
                             case "огний":
-                                ultraComboOn = true;
-                                mixElementComboOn = false;
+                                ultraComboEnabled = true;
+                                mixElementComboEnabled = false;
                                 randomDamage = random.Next(8, 13) / 10f;
-                                lowSpellDamage = playerDamage * ratioLowSpell * factorCritical * randomDamage;
+                                lowSpellDamage = playerDamage * ratioLowSpell * randomDamage;
                                 lowSpellDamage = Convert.ToInt32(lowSpellDamage);
 
                                 if (playerMana >= lowSpellMana)
@@ -374,19 +283,13 @@ namespace TheBossFight
                                     Console.WriteLine("\nНЕ ХВАТАЕТ МАНЫ НА ЗАКЛИНАНИЕ!");
                                     Console.ResetColor();
                                 }
-                                else
-                                {
-                                    Console.ForegroundColor = ConsoleColor.DarkRed;
-                                    Console.WriteLine("\nВЫ ПРОИЗНОСИТЕ ЧУШЬ И НЕ НАНОСИТЕ УРОНА!");
-                                    Console.ResetColor();
-                                }
 
                                 break;
                             case "ядолужиум":
-                                ultraComboOn = false;
-                                mixElementComboOn = true;
+                                ultraComboEnabled = false;
+                                mixElementComboEnabled = true;
                                 randomDamage = random.Next(8, 13) / 10f;
-                                highSpellDamage = playerDamage * ratioHighSpell * factorCritical * randomDamage;
+                                highSpellDamage = playerDamage * ratioHighSpell * randomDamage;
                                 highSpellDamage = Convert.ToInt32(highSpellDamage);
 
                                 if (playerMana >= highSpellMana)
@@ -452,18 +355,12 @@ namespace TheBossFight
                                     Console.WriteLine("\nНЕ ХВАТАЕТ МАНЫ НА ЗАКЛИНАНИЕ!");
                                     Console.ResetColor();
                                 }
-                                else
-                                {
-                                    Console.ForegroundColor = ConsoleColor.DarkRed;
-                                    Console.WriteLine("\nВЫ ПРОИЗНОСИТЕ ЧУШЬ И НЕ НАНОСИТЕ УРОНА!");
-                                    Console.ResetColor();
-                                }
 
                                 break;
                             case "лупий":
-                                ultraComboOn = false;
+                                ultraComboEnabled = false;
                                 randomDamage = random.Next(8, 13) / 10f;
-                                lowestSpellDamage = playerDamage * ratioLowestSpell * factorCritical * randomDamage;
+                                lowestSpellDamage = playerDamage * ratioLowestSpell * randomDamage;
                                 lowestSpellDamage = Convert.ToInt32(lowestSpellDamage);
 
                                 if (playerMana >= lowestSpellMana)
@@ -473,8 +370,9 @@ namespace TheBossFight
                                         "которое с помощью лучей солнца поджигает врага!");
                                     Console.ResetColor();
 
-                                    if (mixElementComboOn == true)
+                                    if (mixElementComboEnabled == true)
                                     {
+                                        mixElementComboEnabled = false;
                                         lowestSpellDamage *= ratioMixedSpell;
                                         lowestSpellMana *= ratioMixedMana;
                                         lowestSpellDamage = Convert.ToInt32(lowestSpellDamage);
@@ -514,7 +412,6 @@ namespace TheBossFight
                                             physicalShield = 0;
                                         }
 
-                                        mixElementComboOff = true;
                                     }
 
                                     playerMana -= lowestSpellMana;
@@ -574,22 +471,16 @@ namespace TheBossFight
                                     Console.WriteLine("\nНЕ ХВАТАЕТ МАНЫ НА ЗАКЛИНАНИЕ!");
                                     Console.ResetColor();
                                 }
-                                else
-                                {
-                                    Console.ForegroundColor = ConsoleColor.DarkRed;
-                                    Console.WriteLine("\nВЫ ПРОИЗНОСИТЕ ЧУШЬ И НЕ НАНОСИТЕ УРОНА!");
-                                    Console.ResetColor();
-                                }
 
                                 break;
                             case "дэдливайперсмерчиум":
-                                mixElementComboOn = false;
+                                mixElementComboEnabled = false;
 
-                                if (ultraComboOn == true && playerMana >= ultraSpellMana)
+                                if (ultraComboEnabled == true && playerMana >= ultraSpellMana)
                                 {
                                     playerMana -= ultraSpellMana;
                                     randomDamage = random.Next(8, 13) / 10f;
-                                    ultraSpellDamage = playerDamage * ratioUltra * factorCritical * randomDamage;
+                                    ultraSpellDamage = playerDamage * ratioUltra * randomDamage;
                                     ultraSpellDamage = Convert.ToInt32(ultraSpellDamage);
 
                                     Console.BackgroundColor = ConsoleColor.Magenta;
@@ -692,104 +583,17 @@ namespace TheBossFight
                                     Console.ResetColor();
                                     break;
                                 }
-                                else
-                                {
-                                    Console.ForegroundColor = ConsoleColor.DarkRed;
-                                    Console.WriteLine("\nВЫ ПРОИЗНОСИТЕ ЧУШЬ И НЕ НАНОСИТЕ УРОНА!");
-                                    Console.ResetColor();
-                                }
-
-                                break;
-                            case "манум":
-
-                                if (playerHealth > healthUpdate * ratioRecoverySkill)
-                                {
-                                    playerMana += manaUpdate;
-                                    playerHealth -= Convert.ToInt32(healthUpdate * ratioRecoverySkill);
-
-                                    Console.ForegroundColor = ConsoleColor.Blue;
-                                    Console.WriteLine("\nВедьма шепчет заклинание, тратя на него здоровье, но чувствует мощный прилив маны.");
-                                    Console.ResetColor();
-                                }
-                                else if (playerHealth <= healthUpdate * ratioRecoverySkill)
-                                {
-                                    Console.WriteLine("\nКоличество здоровья не позволяет вам прошептать заклинание!");
-                                }
-                                else
-                                {
-                                    Console.ForegroundColor = ConsoleColor.DarkRed;
-                                    Console.WriteLine("\nВЫ ПРОИЗНОСИТЕ ЧУШЬ И НИЧЕГО НЕ ПРОИСХОДИТ!");
-                                    Console.ResetColor();
-                                }
-                                break;
-                            case "выпить лекарство":
-
-                                if (cureValue > 0)
-                                {
-                                    cureValue--;
-                                    playerHealth = healthUpdate;
-                                    canAttack = false;
-
-                                    Console.ForegroundColor = ConsoleColor.Magenta;
-                                    Console.WriteLine("\nВы открываете флакончик с ароматной красной жидкостью, быстро и жадно выпиваете до дна. Чувство прилива здоровья охватывает вас мгновенно");
-                                }
-                                else
-                                {
-                                    Console.ForegroundColor = ConsoleColor.Magenta;
-                                    Console.WriteLine("\nВы рыщите по карманам, но флаконов с лекарством там нет!");
-                                    Console.ResetColor();
-                                }
-
-                                break;
-                            case "выпить зелье":
-
-                                if (potionValue > 0)
-                                {
-                                    potionValue--;
-                                    playerMana = manaUpdate;
-                                    canAttack = false;
-
-                                    Console.ForegroundColor = ConsoleColor.Magenta;
-                                    Console.WriteLine("\nВы открываете флакончик с вонючей синей жидкостью, быстро и жадно выпиваете до дна. Чувство прилива маны охватывает вас мгновенно");
-                                }
-                                else
-                                {
-                                    Console.ForegroundColor = ConsoleColor.Magenta;
-                                    Console.WriteLine("\nВы рыщите по карманам, но флаконов с зельем там нет!");
-                                    Console.ResetColor();
-                                }
-
-                                break;
-                            case "вдохнуть эссенцию":
-
-                                if (essentionValue > 0)
-                                {
-                                    essentionValue--;
-                                    playerShield = shieldUpdate;
-                                    canAttack = false;
-
-                                    Console.ForegroundColor = ConsoleColor.Magenta;
-                                    Console.WriteLine("\nВы открываете флакончик с Божественной Эссенцией, быстро и жадно вдыхаете её пары. Чувство прилива Божественной брони охватывает вас мгновенно");
-                                }
-                                else
-                                {
-                                    Console.ForegroundColor = ConsoleColor.Magenta;
-                                    Console.WriteLine("\nВы рыщите по карманам, но флаконов с эссенцией там нет!");
-                                    Console.ResetColor();
-                                }
 
                                 break;
                             case "подсказка":
                                 canAttack = false;
 
                                 Console.WriteLine( "\n- Пожалуйста, " + namePlayer + ", не забывай свои заклинания и команды! Во время атаки произнеси :\n");                               
-                                Console.WriteLine("увернуться \nвыпить лекарство \nвыпить зелье \nвдохнуть эссенцию " +
-                                    " \nядолужиум - создать ядовитую лужу. Высокий физический урон. Затраты маны: " + highSpellMana + "" +
+                                Console.WriteLine(" \nядолужиум - создать ядовитую лужу. Высокий физический урон. Затраты маны: " + highSpellMana + "" +
                                     " \nогний - бросить огненный шар. Низкий магический урон. Затраты маны: " + lowSpellMana);
                                 Console.WriteLine("кобриум - призвать ядовитую змею. Высший физический урон. Затраты маны: " + highestSpellMana);
                                 Console.WriteLine("лупий - призвать магическую лупу. Низший магический урон. Затраты маны: " + lowestSpellMana);
                                 Console.WriteLine("поджечь ядовитую лужу магической лупой. Высочайший магический урон, дополнительный урон в физическую броню. Затраты маны:  " + lowestSpellMana + lowestSpellMana * ratioMixedMana);
-                                Console.WriteLine("манум - сильная прибавка к мане. Значительно уменьшает количество твоего здоровья (-" + healthUpdate * ratioRecoverySkill + ")");
                                 Console.WriteLine("огний + дэдливайперсмерчиум - призвать дух смертельной гадюки. Ультра урон. Затраты маны:  " + ultraSpellMana);                                 
                                 break;
                             default:
@@ -803,7 +607,6 @@ namespace TheBossFight
                     Console.ForegroundColor = Console.BackgroundColor;
                     Console.ReadKey();
                     Console.ResetColor();
-                    factorCritical = criticalUpdate;
 
                     if (canAttack == true)
                     {
@@ -821,73 +624,17 @@ namespace TheBossFight
                             Console.WriteLine("____________________________________________________________________________");
                             Console.WriteLine("\n\t\tАтака " + nameBoss + ": ");
 
-                            rateCriticalMiss = random.Next(0, 11);
                             randomBossSkill = random.Next(0, 11);
 
-                            if (randomBossSkill <= 5 && bossMana >= bossSkillMana)
+                            if (randomBossSkill <= chanceBossSkill && bossMana >= bossSkillMana)
                             {
-                                randomBossSkill = random.Next(0, 2);
-
-                                if (randomBossSkill == 0)
-                                {
-                                    bossSkillFireEnabled = true;
-                                    bossMana -= bossSkillMana;
-                                    playerMana = 0;
-                                    playerShield = 0;
-                                    Console.ForegroundColor = ConsoleColor.DarkBlue;
-                                    Console.BackgroundColor = ConsoleColor.Cyan;
-                                    Console.WriteLine(nameBoss + " тратя силы свей маны, изрыгает из своей пасти на вас шквал странного синего огня!\n Вы чувствуете потерю магической силы и брони... ");
-                                    Console.ResetColor();
-                                    Console.ForegroundColor = Console.BackgroundColor;
-                                    Console.ReadKey();
-                                    Console.ResetColor();
-                                }
-                                else
-                                {
-                                    bossMana -= bossSkillMana;
-                                    bossSkillSnakesEnabled = true;
-                                    Console.BackgroundColor = ConsoleColor.DarkGreen;
-                                    Console.WriteLine(nameBoss + " тратя силы свей маны, призывает несколько змей которые обвивают все ваше тело");
-                                    Console.ForegroundColor = Console.BackgroundColor;
-                                    Console.ReadKey();
-                                    Console.ResetColor();
-                                }
-                            }
-
-                            if (rateCriticalMiss < 1 && playerCast != "увернуться" && bossSkillFireEnabled == false && bossSkillSnakesEnabled == false)
-                            {
-                                factorCritical = criticalDamage;
-                                Console.ForegroundColor = ConsoleColor.DarkRed;
-                                Console.WriteLine("Враг слышит зловещий шёпот внутри головы, преисполняется боевым духом и наносит критический удар!");
+                                bossMana -= bossSkillMana;
+                                bossSkillSnakesEnabled = true;
+                                Console.BackgroundColor = ConsoleColor.DarkGreen;
+                                Console.WriteLine(nameBoss + " тратя силы свей маны, призывает несколько змей которые обвивают все ваше тело");
+                                Console.ForegroundColor = Console.BackgroundColor;
+                                Console.ReadKey();
                                 Console.ResetColor();
-                            }
-                            else if (rateCriticalMiss > 9 && playerCast != "увернуться" && bossSkillFireEnabled == false && bossSkillSnakesEnabled == false)
-                            {
-                                factorCritical = missDamage;
-                                Console.ForegroundColor = ConsoleColor.DarkCyan;
-                                Console.WriteLine("\tВраг слышит Божественный голос внутри головы, во время атаки руки становятся ватными, и он промахивается мимо вас!");
-                                Console.ResetColor();
-                            }
-                            else if (playerCast == "увернуться" && rateCriticalMiss > 6)
-                            {
-                                factorCritical = missDamage;
-                                Console.ForegroundColor = ConsoleColor.DarkCyan;
-                                Console.WriteLine("\tУ вас получается увернуться от атаки врага!");
-                                Console.ResetColor();
-                            }
-                            else if (playerCast == "увернуться" && rateCriticalMiss <= 6)
-                            {
-                                Console.ForegroundColor = ConsoleColor.DarkCyan;
-                                Console.WriteLine("\tУ вас не получается увернуться от атаки врага!");
-                                Console.ResetColor();
-
-                                if (rateCriticalMiss < 1)
-                                {
-                                    factorCritical = criticalDamage;
-                                    Console.ForegroundColor = ConsoleColor.DarkRed;
-                                    Console.WriteLine("Враг слышит зловещий шёпот внутри головы, преисполняется боевым духом и наносит критический удар!");
-                                    Console.ResetColor();
-                                }
                             }
 
                             randomDamage = random.Next(8, 13) / 10f;
@@ -899,7 +646,7 @@ namespace TheBossFight
                             playerHealth = Convert.ToInt32(playerHealth);
                             playerMana = Convert.ToInt32(playerMana);
 
-                            if (playerShield >= 1 && bossSkillFireEnabled == false)
+                            if (playerShield >= 1)
                             {
                                 playerShield -= Convert.ToInt32(bossDamage);
 
@@ -917,7 +664,7 @@ namespace TheBossFight
                                     Console.ResetColor();
                                 }
                             }
-                            else if (playerShield < 1 && playerHealth >= 1 && bossSkillFireEnabled == false)
+                            else if (playerShield < 1 && playerHealth >= 1)
                             {
                                 playerHealth -= Convert.ToInt32(bossDamage);
 
@@ -938,7 +685,7 @@ namespace TheBossFight
                                 }
                             }
 
-                            if (playerHealth < 1 && bossSkillFireEnabled == false)
+                            if (playerHealth < 1)
                             {
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 Console.WriteLine("\nвам нанесёнo " + bossDamage + " урона.\nВЫ УМЕРЛИ");
