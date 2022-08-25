@@ -1,0 +1,70 @@
+using System;
+
+namespace ConsoleApp6
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int linesAmount = 0;
+            int columnsAmount = 0;
+            bool linesSet = false;
+            bool columnsSet = false;
+            int totalOfTheSecondLine = 0;
+            int productOfTheFirstColumn = 1;
+
+            while(linesSet == false)
+            {
+                Console.Write("Введите количество строк: ");
+
+                linesAmount = Convert.ToInt32(Console.ReadLine());
+
+                if(linesAmount > 0)
+                {
+                    linesSet = true;
+                }
+            }
+
+            while(columnsSet == false)
+            {
+                Console.Write("Введите количество столбцов: ");
+
+                columnsAmount = Convert.ToInt32(Console.ReadLine());
+
+                if(columnsAmount > 0)
+                {
+                    columnsSet = true;
+                }
+            }
+
+            Console.WriteLine("\n\n");
+
+            int[,] matrix = new int[linesAmount, columnsAmount];
+            Random randomNumber = new Random();
+
+            for(int i = 0; i < matrix.GetLength(0); i++)
+            {
+                for(int j = 0; j < matrix.GetLength(1); j++)
+                {
+                    matrix[i,j] = randomNumber.Next(0, 10);
+                    Console.Write(matrix[i, j] + "  ");
+
+                    if(i == 1)
+                    {
+                        totalOfTheSecondLine += matrix[i, j];
+                    }
+
+                    if(j == 0)
+                    {
+                        productOfTheFirstColumn *= matrix[i, j];
+                    }
+                }
+
+                Console.WriteLine("\n");
+            }
+
+            Console.WriteLine("Сумма второй строки равна " + totalOfTheSecondLine);
+            Console.WriteLine("Произведение первого столбца равно " + productOfTheFirstColumn);
+        }
+    }
+}
