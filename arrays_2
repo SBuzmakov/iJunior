@@ -1,0 +1,54 @@
+using System;
+
+namespace ConsoleApp6
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int linesAmount = 10;
+            int columnsAmount = 10;
+            int minimumValue = 0;
+            int maximumValue = 11;
+            int maximumNumber = int.MinValue;
+
+            Console.WriteLine("\n\n");
+
+            int[,] matrix = new int[linesAmount, columnsAmount];
+            Random randomNumber = new Random();
+
+            for(int i = 0; i < matrix.GetLength(0); i++)
+            {
+                for(int j = 0; j < matrix.GetLength(1); j++)
+                {
+                    matrix[i,j] = randomNumber.Next(minimumValue, maximumValue);
+                    Console.Write(matrix[i, j] + "  ");
+
+                    if (matrix[i, j] > maximumNumber)
+                    {
+                        maximumNumber = matrix[i, j];
+                    }
+                }
+
+                Console.WriteLine("\n");
+            }
+
+            Console.WriteLine("\nНаибольшее число в матрице :" + maximumNumber + "\n################################\n");
+
+            for (int i = 0; i < matrix.GetLength(0); i++)
+            {
+                for (int j = 0; j < matrix.GetLength(1); j++)
+                {
+                    if (matrix[i,j] == maximumNumber)
+                    {
+                        matrix[i,j] = 0;                       
+                    }
+
+                    Console.Write(matrix[i, j] + "  ");
+                }
+
+                Console.WriteLine("\n");
+            }
+        }
+    }
+}
