@@ -1,0 +1,56 @@
+using System;
+
+namespace ConsoleApp6
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string userInput;
+            int sumOfNumbers = 0;
+            int[] numbersLine = new int[0];
+            int[] temporaryNumbersLine = new int[numbersLine.Length + 1];
+            bool canSumUp = true;
+
+            while (canSumUp)
+            {             
+                Console.Write("exit for exit\nshow for show the array\nsum for summarize\nEnter the number: ");
+                userInput = Console.ReadLine();
+
+                switch (userInput)
+                {
+                    case "exit":
+                        canSumUp = false;
+                        break;
+                    case "show":
+
+                            for (int i = 0; i < numbersLine.Length; i++)
+                            {
+                                Console.WriteLine(numbersLine[i]);
+                            }
+
+                            Console.ReadLine();
+                        break;
+                    case "sum":
+                        Console.WriteLine("sum of numbers: " + sumOfNumbers);
+                        Console.ReadLine();
+                        break;
+                    default:
+                        temporaryNumbersLine = new int[numbersLine.Length + 1];
+
+                        for (int i = 0; i < numbersLine.Length; i++)
+                        {
+                            temporaryNumbersLine[i] = numbersLine[i];
+                        }
+
+                        temporaryNumbersLine[temporaryNumbersLine.Length - 1] = Convert.ToInt32(userInput);
+                        sumOfNumbers += Convert.ToInt32(userInput);
+                        numbersLine = temporaryNumbersLine;
+                        break;
+                }
+
+                Console.Clear();
+            }
+        }
+    }
+}
