@@ -41,7 +41,14 @@ namespace ConsoleApp6
                 }
             }
 
-            Console.WriteLine("\nсамый длинный подмассив - из числа " + numberValue + ". Состоит из " + repeatsAmount + " элементов.");
+            if(repeatsAmount == 1)
+            {
+                Console.WriteLine("\nподмассивы из одинаковых цифр отсутствуют");
+            }
+            else
+            {
+                Console.WriteLine("\nсамый длинный подмассив - из числа " + numberValue + ". Состоит из " + repeatsAmount + " элементов.");
+            }
         }
     }
 }
