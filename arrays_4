@@ -1,0 +1,34 @@
+using System;
+
+namespace ConsoleApp6
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] array = new int[30];
+            Random randomNumber = new Random();
+            int minimumValue = 1;
+            int maximumValue = 10;
+            int repeatsAmount = 1;
+            int numberValue = 0;
+
+            for(int i = 0; i < array.Length; i++)
+            {
+                array[i] = randomNumber.Next(minimumValue, maximumValue);
+                Console.Write(array[i] + " ");
+            }         
+            
+            for(int i = 0; i < array.Length - 1; i++)
+            {
+                if(array[i] == array[i + 1])
+                {
+                    numberValue = array[i];
+                    repeatsAmount++;
+                }              
+            }
+
+            Console.WriteLine("\nсамый длинный подмассив - из числа " + numberValue + ". Состоит из " + repeatsAmount + " элементов.");
+        }
+    }
+}
