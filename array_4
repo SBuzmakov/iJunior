@@ -7,33 +7,39 @@ namespace ConsoleApp6
         static void Main(string[] args)
         {
             string userInput;
-            int sumOfNumbers = 0;
             int[] numbersLine = new int[0];
             bool canSumUp = true;
-            const string exit = "exit";
-            const string show = "show";
-            const string sum = "sum";
+            const string Exit = "exit";
+            const string Show = "show";
+            const string Sum = "sum";
 
             while (canSumUp)
             {
-                Console.Write("\nWrite:\n" + exit + " for exit\n" +show + " for show the array\n" + sum + " for summarize\n\nEnter a number: ");
+                Console.Write("\nWrite:\n" + Exit + " for exit\n" + Show + " for show the array\n" + Sum + " for summarize\n\nEnter a number: ");
                 userInput = Console.ReadLine();
 
                 switch (userInput)
                 {
-                    case exit:
+                    case Exit:
                         canSumUp = false;
                         break;
-                    case show:
+                    case Show:
 
                         for (int i = 0; i < numbersLine.Length; i++)
                         {
-                            Console.WriteLine(numbersLine[i]);
+                            Console.Write(numbersLine[i] + " ");
                         }
 
                         Console.ReadLine();
                         break;
-                    case sum:
+                    case Sum:
+                        int sumOfNumbers = 0;
+
+                        for (int i = 0; i < numbersLine.Length; i++)
+                        {
+                            sumOfNumbers += numbersLine[i];
+                        }
+
                         Console.WriteLine("sum of numbers: " + sumOfNumbers);
                         Console.ReadLine();
                         break;
@@ -46,7 +52,6 @@ namespace ConsoleApp6
                         }
 
                         temporaryNumbersLine[temporaryNumbersLine.Length - 1] = Convert.ToInt32(userInput);
-                        sumOfNumbers += temporaryNumbersLine[temporaryNumbersLine.Length - 1];
                         numbersLine = temporaryNumbersLine;
                         break;
                 }
