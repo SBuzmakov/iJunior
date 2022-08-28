@@ -9,23 +9,33 @@ namespace ConsoleApp6
             int[] array = new int[30];
             Random randomNumber = new Random();
             int minimumValue = 1;
-            int maximumValue = 10;
+            int maximumValue = 6;
             int repeatsAmount = 1;
             int numberValue = 0;
+            int temporaryNumberValue = 0;
+            int temporaryRepeatsAmount = 1;
 
-            for(int i = 0; i < array.Length; i++)
+            for (int i = 0; i < array.Length; i++)
             {
                 array[i] = randomNumber.Next(minimumValue, maximumValue);
                 Console.Write(array[i] + " ");
-            }         
-            
-            for(int i = 0; i < array.Length - 1; i++)
+            }
+
+            for (int i = 0; i < array.Length - 1; i++)
             {
-                if(array[i] == array[i + 1])
+                if (array[i] == array[i + 1])
                 {
-                    numberValue = array[i];
-                    repeatsAmount++;
-                }              
+                    temporaryNumberValue = array[i];
+                    temporaryRepeatsAmount++;
+                }
+                else
+                {
+                    temporaryNumberValue = 0;
+                    temporaryRepeatsAmount = 1;
+                }
+
+                numberValue = temporaryNumberValue;
+                repeatsAmount = temporaryRepeatsAmount;
             }
 
             Console.WriteLine("\nсамый длинный подмассив - из числа " + numberValue + ". Состоит из " + repeatsAmount + " элементов.");
