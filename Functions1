@@ -1,0 +1,169 @@
+using System;
+
+namespace ConsoleApp6
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            bool canWork = true;
+            string[] surnames = new string[1] { "buzmakov" };
+            string[] jobTitles = new string[1] { "mechanik" };
+            const int DossierListPoint = 1;
+            const int DossierAddPoint = 2;
+            const int DossierDeletePoint = 3;
+            const int DossierFindPoint = 4;
+            const int ExitPoint = 5;
+
+            while (canWork)
+            {
+                Console.Clear();
+                Console.WriteLine(DossierListPoint + " - вывести список досье\n" + DossierAddPoint + " - добавить досье\n" + DossierDeletePoint + " - удалить досье\n" +
+                    DossierFindPoint + " - найти по фамилии\n" + ExitPoint + " - закончить работу");
+                Console.Write("\nвведите номер команды: ");
+
+                int menuPoint = int.Parse(Console.ReadLine());
+
+                switch (menuPoint)
+                {
+                    case ExitPoint:
+                        canWork = false;                       
+                        break;
+                    case DossierListPoint:
+                        ShowDossierList(ref surnames, ref jobTitles);
+                        break;
+                    case DossierAddPoint:
+                        AddDossier(ref surnames, ref jobTitles);
+                        break;
+                    case DossierDeletePoint:
+                        DeleteDossier(ref surnames, ref jobTitles);
+                        break;
+                    case DossierFindPoint:
+                        FindDossier(ref surnames, ref jobTitles);
+                        break;
+                    default:
+                        Error();
+                        break;
+                }
+            }
+            
+            Console.Clear();
+            Console.WriteLine("Работа приложения закончена.");
+            Console.ReadKey();
+        }
+
+        static void ShowDossierList(ref string[] array1 , ref string[] array2)
+        {
+            Console.Clear();
+            Console.WriteLine("Список досье :\n");
+            Console.WriteLine(" №  Фамилия   -   Должность \n");
+            
+            for (int i = 0; i < array1.Length; i++)
+            {
+                Console.WriteLine(" #" + (i + 1) + " " + array1[i] + " - " + array2[i]);               
+            }
+            
+            Console.ReadKey();           
+        }
+
+        static void AddDossier(ref string[] array1, ref string[] array2)
+        {
+            Console.Clear();
+            Console.WriteLine("Добавление досье. ");
+
+            EnlargeArray(ref array1, "\n\nВведите фамилию: ");
+
+            EnlargeArray(ref array2, "\n\nВведите должность: ");
+        }
+
+        static void EnlargeArray(ref string[] array, string text)
+        {
+            string[] temporaryArray = new string[array.Length + 1];
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                temporaryArray[i] = array[i];
+            }
+
+            array = temporaryArray;
+            Console.Write(text);
+            array[^1] = Console.ReadLine();
+        }
+
+        static void DeleteDossier(ref string[] array1, ref string[] array2)
+        {
+            Console.Clear();
+
+            Console.WriteLine("\n\nУдаление досье. ");
+
+            ShowDossierList(ref array1, ref array2);
+
+            Console.Write("\n\nДосье под каким номером удалить? ");
+
+            int removingIndex = int.Parse(Console.ReadLine()) - 1;
+
+            if(removingIndex < 0 || removingIndex >= array1.Length)
+            {
+                Error();
+            }
+            else
+            {
+                ReduceArray(ref array1, removingIndex);
+
+                ReduceArray(ref array2, removingIndex);
+            }
+        }
+
+        static void ReduceArray(ref string[] array, int removingIndex)
+        {
+            string[] temporaryArray = new string[array.Length - 1];
+
+            for (int i = 0; i < removingIndex; i++)
+            {
+                temporaryArray[i] = array[i];
+            }
+
+            for(int i = removingIndex + 1; i < array.Length; i++)
+            {
+                temporaryArray[i - 1] = array[i];
+            }
+
+            array = temporaryArray;
+        }
+
+        static void FindDossier(ref string[] array1, ref string[] array2)
+        {
+            Console.Clear();
+            string surnameInput;
+            bool canFind = false;
+            Console.WriteLine("Поиск работника по фамилии. ");
+            Console.Write("\n\nВведите фамилию: ");
+            surnameInput = Console.ReadLine();
+           
+            for (int i = 0; i < array1.Length; i++)
+            {
+                if(surnameInput.ToLower() == array1[i].ToLower())
+                {
+                    canFind = true;
+                    Console.WriteLine(" #" + (i + 1) + " " + array1[i] + " - " + array2[i]);
+                    Console.ReadLine();                   
+                }
+            }
+            
+            if(canFind == false)
+            {
+                Console.Clear();
+                Console.WriteLine("Такого человека нет");
+                Console.ReadLine();
+            }
+        }
+
+        static void Error()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Ошибка, введите правильное значение.");
+            Console.ResetColor();
+            Console.ReadLine();
+        }
+    }
+}
