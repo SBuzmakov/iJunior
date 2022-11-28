@@ -6,14 +6,14 @@ namespace ConsoleApp6
     {
         static void Main(string[] args)
         {
-            bool canWork = true;
-            string[] surnames = new string[1] { "buzmakov" };
-            string[] jobTitles = new string[1] { "mechanik" };
             const int DossierListPoint = 1;
             const int DossierAddPoint = 2;
             const int DossierDeletePoint = 3;
             const int DossierFindPoint = 4;
             const int ExitPoint = 5;
+            bool canWork = true;
+            string[] surnames = new string[1] { "buzmakov" };
+            string[] jobTitles = new string[1] { "mechanik" };           
 
             while (canWork)
             {
@@ -30,7 +30,7 @@ namespace ConsoleApp6
                         canWork = false;                       
                         break;
                     case DossierListPoint:
-                        ShowDossierList(ref surnames, ref jobTitles);
+                        ShowDossierList(surnames, jobTitles);
                         break;
                     case DossierAddPoint:
                         AddDossier(ref surnames, ref jobTitles);
@@ -39,7 +39,7 @@ namespace ConsoleApp6
                         DeleteDossier(ref surnames, ref jobTitles);
                         break;
                     case DossierFindPoint:
-                        FindDossier(ref surnames, ref jobTitles);
+                        FindDossier(surnames, jobTitles);
                         break;
                     default:
                         Error();
@@ -52,7 +52,7 @@ namespace ConsoleApp6
             Console.ReadKey();
         }
 
-        static void ShowDossierList(ref string[] array1 , ref string[] array2)
+        static void ShowDossierList(string[] array1 , string[] array2)
         {
             Console.Clear();
             Console.WriteLine("Список досье :\n");
@@ -92,7 +92,7 @@ namespace ConsoleApp6
         {
             Console.Clear();
             Console.WriteLine("\n\nУдаление досье. ");
-            ShowDossierList(ref array1, ref array2);
+            ShowDossierList(array1, array2);
             Console.Write("\n\nДосье под каким номером удалить? ");
 
             int removingIndex = int.Parse(Console.ReadLine()) - 1;
@@ -125,7 +125,7 @@ namespace ConsoleApp6
             array = temporaryArray;
         }
 
-        static void FindDossier(ref string[] array1, ref string[] array2)
+        static void FindDossier(string[] array1, string[] array2)
         {
             Console.Clear();
             string surnameInput;
