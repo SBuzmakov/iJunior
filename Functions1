@@ -12,7 +12,7 @@ namespace ConsoleApp6
             const int DossierFindPoint = 4;
             const int ExitPoint = 5;
             bool canWork = true;
-            string[] surnames = new string[1] { "buzmakov" };
+            string[] fullnames = new string[1] { "buzmakov sergey vasilievich" };
             string[] jobTitles = new string[1] { "mechanik" };           
 
             while (canWork)
@@ -30,19 +30,19 @@ namespace ConsoleApp6
                         canWork = false;                       
                         break;
                     case DossierListPoint:
-                        ShowDossierList(surnames, jobTitles);
+                        ShowDossierList(fullnames, jobTitles);
                         break;
                     case DossierAddPoint:
-                        AddDossier(ref surnames, ref jobTitles);
+                        AddDossier(ref fullnames, ref jobTitles);
                         break;
                     case DossierDeletePoint:
-                        DeleteDossier(ref surnames, ref jobTitles);
+                        DeleteDossier(ref fullnames, ref jobTitles);
                         break;
                     case DossierFindPoint:
-                        FindDossier(surnames, jobTitles);
+                        FindDossier(fullnames, jobTitles);
                         break;
                     default:
-                        Error();
+                        WriteError();
                         break;
                 }
             }
@@ -56,11 +56,12 @@ namespace ConsoleApp6
         {
             Console.Clear();
             Console.WriteLine("Список досье :\n");
-            Console.WriteLine(" №  Фамилия   -   Должность \n");
+            Console.WriteLine(" №  ФИО\t\t     -     \tДолжность \n");
             
             for (int i = 0; i < array1.Length; i++)
             {
-                Console.WriteLine(" #" + (i + 1) + " " + array1[i] + " - " + array2[i]);               
+                int numberDossier = i + 1;
+                PrintDossier(array1, array2, numberDossier);
             }
             
             Console.ReadKey();           
@@ -70,11 +71,11 @@ namespace ConsoleApp6
         {
             Console.Clear();
             Console.WriteLine("Добавление досье. ");
-            EnlargeArray(ref array1, "\n\nВведите фамилию: ");
-            EnlargeArray(ref array2, "\n\nВведите должность: ");
+            array1 = EnlargeArray(array1, "\n\nВведите ФИО: ");
+            array2 = EnlargeArray(array2, "\n\nВведите должность: ");
         }
 
-        static void EnlargeArray(ref string[] array, string text)
+        static string[] EnlargeArray(string[] array, string text)
         {
             string[] temporaryArray = new string[array.Length + 1];
 
@@ -83,9 +84,10 @@ namespace ConsoleApp6
                 temporaryArray[i] = array[i];
             }
 
-            array = temporaryArray;
             Console.Write(text);
-            array[^1] = Console.ReadLine();
+            temporaryArray[^1] = Console.ReadLine();
+            array = temporaryArray;
+            return array;
         }
 
         static void DeleteDossier(ref string[] array1, ref string[] array2)
@@ -99,16 +101,20 @@ namespace ConsoleApp6
 
             if(removingIndex < 0 || removingIndex >= array1.Length)
             {
-                Error();
+                WriteError();
             }
             else
             {
-                ReduceArray(ref array1, removingIndex);
-                ReduceArray(ref array2, removingIndex);
+                Console.WriteLine("Досье удалено:");
+                int numberDossier = removingIndex + 1;
+                PrintDossier(array1, array2, numberDossier);
+                Console.ReadLine();
+                array1 = ReduceArray(array1, removingIndex);
+                array2 = ReduceArray(array2, removingIndex);
             }
         }
 
-        static void ReduceArray(ref string[] array, int removingIndex)
+        static string[] ReduceArray(string[] array, int removingIndex)
         {
             string[] temporaryArray = new string[array.Length - 1];
 
@@ -123,6 +129,7 @@ namespace ConsoleApp6
             }
 
             array = temporaryArray;
+            return array;
         }
 
         static void FindDossier(string[] array1, string[] array2)
@@ -136,10 +143,13 @@ namespace ConsoleApp6
            
             for (int i = 0; i < array1.Length; i++)
             {
-                if(surnameInput.ToLower() == array1[i].ToLower())
+                string[] splitFullName = array1[i].Split(' ');
+
+                if (surnameInput.ToLower() == splitFullName[0].ToLower())
                 {
+                    int numberDossier = i + 1;
                     canFind = true;
-                    Console.WriteLine(" #" + (i + 1) + " " + array1[i] + " - " + array2[i]);
+                    PrintDossier(array1, array2, numberDossier);
                     Console.ReadLine();                   
                 }
             }
@@ -152,12 +162,17 @@ namespace ConsoleApp6
             }
         }
 
-        static void Error()
+        static void WriteError()
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Ошибка, введите правильное значение.");
             Console.ResetColor();
             Console.ReadLine();
+        }
+
+        static void PrintDossier(string[] array1, string[] array2, int numberDossier)
+        {               
+            Console.WriteLine(" #" + (numberDossier) + " " + array1[numberDossier - 1] + " - " + array2[numberDossier - 1]);          
         }
     }
 }
