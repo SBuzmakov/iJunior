@@ -14,7 +14,7 @@ namespace ConsoleApp6
             while (isLive)
             {
                 int randomDamage = random.Next(1, 50);
-                DrawBar(lifeValue, maxLife, ConsoleColor.Red, ConsoleColor.DarkGray);
+                DrawBar(0, 0, lifeValue, maxLife, ConsoleColor.Red, ConsoleColor.DarkGray);
                 Console.WriteLine("Push enter to be less healthy.");
                 lifeValue -= randomDamage;
                 Console.ReadLine();
@@ -23,7 +23,7 @@ namespace ConsoleApp6
                 if(lifeValue <= 0)
                 {
                     isLive = false;
-                    DrawBar(0, maxLife, ConsoleColor.Red, ConsoleColor.DarkGray);
+                    DrawBar(0, 0, 0, maxLife, ConsoleColor.Red, ConsoleColor.DarkGray);
                     Console.WriteLine("You died");
                     Console.ReadLine();
                     Console.Clear();
@@ -33,10 +33,10 @@ namespace ConsoleApp6
             Console.WriteLine("game over.");
         }
 
-        static void DrawBar(int value, int maxValue, ConsoleColor colorValue, ConsoleColor colorEmpty)
+        static void DrawBar(int positionX, int positionY, int value, int maxValue, ConsoleColor colorValue, ConsoleColor colorEmpty)
         {
             string bar = "";
-            string emptyBar = "";
+            string emptyBar = "";           
 
             for (int i = 0; i < value; i++)
             {
@@ -48,6 +48,7 @@ namespace ConsoleApp6
                 emptyBar += " ";
             }
 
+            Console.SetCursorPosition(positionX, positionY);
             Console.BackgroundColor = colorValue;
             Console.Write(bar);
             Console.BackgroundColor = colorEmpty;
