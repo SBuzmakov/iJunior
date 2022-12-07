@@ -6,24 +6,29 @@ namespace ConsoleApp6
     {
         static void Main(string[] args)
         {
-            int lifeValue = 100;
-            int maxLife = 100;
+            int lifeValue = 1000000;
+            int lifeValueMax = 1000000;
+            int barValueMax = 20;
             bool isLive = true;
             Random random = new Random();
+            int minimumDamage = 10000;
+            int maximumDamage = 500000;
 
             while (isLive)
             {
-                int randomDamage = random.Next(1, 50);
-                DrawBar(0, 0, lifeValue, maxLife, ConsoleColor.Red, ConsoleColor.DarkGray);
-                Console.WriteLine("Push enter to be less healthy.");
+                int randomDamage = random.Next(minimumDamage, maximumDamage);
+                DrawBar(0, 0, barValueMax, lifeValue, lifeValueMax, ConsoleColor.Red, ConsoleColor.DarkGray);
+                Console.WriteLine("Push enter to be less healthy.");               
+                Console.ReadLine();
                 lifeValue -= randomDamage;
+                Console.WriteLine("Нанесено " + randomDamage + " урона.");
                 Console.ReadLine();
                 Console.Clear();
 
                 if(lifeValue <= 0)
                 {
                     isLive = false;
-                    DrawBar(0, 0, 0, maxLife, ConsoleColor.Red, ConsoleColor.DarkGray);
+                    DrawBar(0, 0, barValueMax, 0, lifeValueMax, ConsoleColor.Red, ConsoleColor.DarkGray);
                     Console.WriteLine("You died");
                     Console.ReadLine();
                     Console.Clear();
@@ -33,22 +38,24 @@ namespace ConsoleApp6
             Console.WriteLine("game over.");
         }
 
-        static void DrawBar(int positionX, int positionY, int value, int maxValue, ConsoleColor colorValue, ConsoleColor colorEmpty)
+        static void DrawBar(int positionX, int positionY, int valueBarMax, int valueFactual, int valueFactualMax, ConsoleColor colorValue, ConsoleColor colorEmpty)
         {
             string bar = "";
-            string emptyBar = "";           
+            string emptyBar = "";
+            int valueRatio = valueFactualMax / valueBarMax;
 
-            for (int i = 0; i < value; i++)
+            for (int i = 0; i < valueFactual/valueRatio; i++)
             {
                 bar += " ";
             }
 
-            for(int i = value; i < maxValue; i++)
+            for(int i = valueFactual / valueRatio; i < valueBarMax; i++)
             {
                 emptyBar += " ";
             }
 
             Console.SetCursorPosition(positionX, positionY);
+            Console.WriteLine(valueFactual + "/" + valueFactualMax);
             Console.BackgroundColor = colorValue;
             Console.Write(bar);
             Console.BackgroundColor = colorEmpty;
