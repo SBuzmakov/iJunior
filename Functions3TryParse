@@ -21,12 +21,14 @@ namespace ConsoleApp7
                 string userInput = Console.ReadLine();
                 canParse = int.TryParse(userInput,  out parsedNumber);
 
-                if (canParse == false)
+                if (canParse)
                 {
-                    Console.WriteLine("некорректное значение! введите число");
-                    Console.ReadLine();
-                    Console.Clear();
-                }                
+                    break;
+                }
+
+                Console.WriteLine("некорректное значение! введите число");
+                Console.ReadLine();
+                Console.Clear();                              
             }
 
             return parsedNumber;
