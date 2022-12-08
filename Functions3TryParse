@@ -5,31 +5,31 @@ namespace ConsoleApp7
     class Program
     {
         static void Main(string[] args)
-        {           
-            ConvertToNumber();
+        {
+            int number = GetNumber();
+            Console.WriteLine(number);
         }
 
-        static void ConvertToNumber()
+        static int GetNumber()
         {
             bool canParse = false;
+            int parsedNumber = 0;
 
             while(canParse == false)
             {
                 Console.Write("Введите число ");
                 string userInput = Console.ReadLine();
-                canParse = int.TryParse(userInput,  out int parsedNumber);
+                canParse = int.TryParse(userInput,  out parsedNumber);
 
-                if (canParse == true)
-                {
-                    Console.WriteLine("Введено число " + parsedNumber);
-                }
-                else
+                if (canParse == false)
                 {
                     Console.WriteLine("некорректное значение! введите число");
                     Console.ReadLine();
                     Console.Clear();
-                }
-            }                 
+                }                
+            }
+
+            return parsedNumber;
         }
     }
 }
