@@ -15,28 +15,24 @@ namespace ConsoleApp7
             bool isNumber = false;
             int parsedNumber = 0;
 
-            while(!isNumber)
+            while(isNumber == false)
             {
                 Console.Write("Введите число ");
                 string userInput = Console.ReadLine();
                 isNumber = int.TryParse(userInput,  out parsedNumber);
 
-                WriteResult(isNumber, parsedNumber);
+                WriteError(isNumber, parsedNumber);
             }
 
             return parsedNumber;
         }
 
-        static void WriteResult(bool isNumber, int number)
+        static void WriteError(bool isNumber, int number)
         {
-            if (isNumber)
-            {
-                Console.WriteLine("Введено число " + number);
-            }
-            else
+            if (isNumber == false)
             {
                 Console.WriteLine("некорректное значение! введите число");
-            }
+            }           
         }
     }
 }
