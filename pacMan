@@ -1,0 +1,309 @@
+using System;
+
+namespace pacman
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int mapWidth = 40;
+            int mapHeight = 20;
+            int playerPositionX;
+            int playerPositionY;
+            int enemyPositionX;
+            int enemyPositionY;
+            int collectablePlayerAmount = 0;
+            int collectableEnemyAmount = 0;
+            int collectableAmountLeft = 0;
+            int directionMovePlayerX = 0;
+            int directionMovePlayerY = 1;
+            int directionMoveEnemyX = 0;
+            int directionMoveEnemyY = 1;
+            bool canPlay = true;
+            int gameSpeed = 170;
+            char[,] gameObjects = new char[mapHeight, mapWidth];
+            char playerSymbol = 'o';
+            char enemySymbol = '%';
+            char collidedPlayerSymbol = ' ';
+            char collidedEnemySymbol = ' ';
+            char voidSymbol = ' ';
+            char wallSymbol = '#';
+            char collectableSymbol = '$';
+            int timeAmount = 500;
+
+            Console.CursorVisible = false;
+
+            GetRandomPrimaryObjects(gameObjects, out playerPositionX, out playerPositionY, out collectableAmountLeft, out enemyPositionX, out enemyPositionY, voidSymbol, wallSymbol,
+                playerSymbol, enemySymbol, collectableSymbol);
+
+            while (timeAmount > 0 && canPlay && collectableAmountLeft > 0)
+            {
+                DrawInterface(collectablePlayerAmount, collectableEnemyAmount,  collectableAmountLeft, mapHeight, timeAmount);
+
+                DrawGameObjects(gameObjects);
+
+                canPlay = CheckEnemyCollision(ref playerPositionX, ref playerPositionY, ref enemyPositionX, ref enemyPositionY, ref canPlay);
+
+                ControlMoveDirection(ref directionMovePlayerX, ref directionMovePlayerY);
+
+                ControlMoveDirection(gameObjects, ref enemyPositionX, ref enemyPositionY, ref directionMoveEnemyX, ref directionMoveEnemyY, wallSymbol);
+
+                MoveCharacter(playerSymbol, gameObjects, ref playerPositionX, ref playerPositionY, ref directionMovePlayerX, ref directionMovePlayerY, ref collidedPlayerSymbol,
+                    voidSymbol, wallSymbol);
+
+                MoveCharacter(enemySymbol, gameObjects, ref enemyPositionX, ref enemyPositionY, ref directionMoveEnemyX, ref directionMoveEnemyY, ref collidedEnemySymbol, voidSymbol,
+                    wallSymbol);
+
+                ConsiderCollectables(ref collectableAmountLeft, collidedPlayerSymbol, ref collectablePlayerAmount, collectableSymbol);
+
+                ConsiderCollectables(ref collectableAmountLeft, collidedEnemySymbol, ref collectableEnemyAmount, collectableSymbol);
+
+                timeAmount--;
+
+                System.Threading.Thread.Sleep(gameSpeed);
+            }
+
+            Console.Clear();
+            Console.Write("Game Over.\n\n");
+
+            PrintGameResult(collectableAmountLeft, timeAmount, collectablePlayerAmount, collectableEnemyAmount, canPlay);
+
+            Console.ReadKey();
+        }
+
+        static void PrintGameResult(int collectableAmountLeft, int timeAmount, int collectablePlayerAmount, int collectableEnemyAmount, bool canPlay)
+        {
+            if (canPlay == false)
+            {
+                Console.WriteLine("You collided with enemy!\nYou lose!\n");
+            }
+
+            if (timeAmount == 0 || collectableAmountLeft == 0)
+            {
+                if(timeAmount == 0)
+                {
+                    Console.WriteLine($"Time is up!\n\n");
+                }
+
+                Console.WriteLine($"You collected {collectablePlayerAmount} $ and enemy collected {collectableEnemyAmount} $.");
+                
+                if(collectablePlayerAmount > collectableEnemyAmount)
+                {
+                    Console.WriteLine("Congratulations! You Win!");
+                }
+                else
+                {
+                    Console.WriteLine("You Lose!");
+                }
+            }
+        }
+
+        static void DrawGameObjects(char[,] gameObjects)
+        {
+            Console.SetCursorPosition(0, 0);
+
+            for (int y = 0; y < gameObjects.GetLength(0); y++)
+            {
+                for (int x = 0; x < gameObjects.GetLength(1); x++)
+                {
+                    Console.Write(gameObjects[y, x]);
+                }
+
+                Console.WriteLine();
+            }
+        }
+
+        static void ControlMoveDirection(ref int directionMoveX, ref int directionMoveY)
+        {
+            const ConsoleKey PressUpArrow = ConsoleKey.UpArrow;
+            const ConsoleKey PressDownArrow = ConsoleKey.DownArrow;
+            const ConsoleKey PressLeftArrow = ConsoleKey.LeftArrow;
+            const ConsoleKey PressRightArrow = ConsoleKey.RightArrow;
+
+            int positiveMoveValue = 1;
+            int negativeMoveValue = -1;
+            int neutralMoveValue = 0;
+
+            if (Console.KeyAvailable)
+            {
+                ConsoleKeyInfo charKey = Console.ReadKey(true);
+
+                switch (charKey.Key)
+                {
+                    case PressUpArrow:
+
+                        GetMoveDirections(ref directionMoveX, ref directionMoveY, neutralMoveValue, negativeMoveValue);
+
+                        break;
+                    case PressLeftArrow:
+
+                        GetMoveDirections(ref directionMoveX, ref directionMoveY, negativeMoveValue, neutralMoveValue);
+
+                        break;
+                    case PressDownArrow:
+
+                        GetMoveDirections(ref directionMoveX, ref directionMoveY, neutralMoveValue, positiveMoveValue);
+
+                        break;
+                    case PressRightArrow:
+
+                        GetMoveDirections(ref directionMoveX, ref directionMoveY, positiveMoveValue, neutralMoveValue);
+
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        static void ControlMoveDirection(char[,] gameObjects, ref int enemyPositionX, ref int enemyPositionY, ref int directionMoveEnemyX, ref int directionMoveEnemyY, 
+            char wallSymbol)
+        {
+            const int NumberMoveUp = 1;
+            const int NumberMoveLeft = 2;
+            const int NumberMoveDown = 3;
+            const int NumberMoveRight = 4;
+
+            int positiveMoveValue = 1;
+            int negativeMoveValue = -1;
+            int neutralMoveValue = 0;
+            Random random = new Random();
+            int randomRange = 5;
+            int numberMoveRandom = random.Next(1, randomRange);
+
+            if (gameObjects[enemyPositionY + directionMoveEnemyY, enemyPositionX + directionMoveEnemyX] == wallSymbol)
+            {
+                switch (numberMoveRandom)
+                {
+                    case NumberMoveUp:
+
+                        GetMoveDirections(ref directionMoveEnemyX, ref directionMoveEnemyY, neutralMoveValue, negativeMoveValue);
+
+                        break;
+                    case NumberMoveLeft:
+
+                        GetMoveDirections(ref directionMoveEnemyX, ref directionMoveEnemyY, negativeMoveValue, neutralMoveValue);
+
+                        break;
+                    case NumberMoveDown:
+
+                        GetMoveDirections(ref directionMoveEnemyX, ref directionMoveEnemyY, neutralMoveValue, positiveMoveValue);
+
+                        break;
+                    case NumberMoveRight:
+
+                        GetMoveDirections(ref directionMoveEnemyX, ref directionMoveEnemyY, positiveMoveValue, neutralMoveValue);
+
+                        break;
+                }
+            }
+        }
+
+        static void GetMoveDirections(ref int directionMoveX, ref int directionMoveY, int axisXMoveValue, int axisYMoveValue)
+        {
+            directionMoveX = axisXMoveValue;
+            directionMoveY = axisYMoveValue;
+        }
+
+        static void MoveCharacter(char character, char [,] gameObjects, ref int characterPositionX, ref int characterPositionY, ref int directionMoveX, ref int directionMoveY,
+            ref char nextSymbol, char voidSymbol, char wallSymbol)
+        {
+            nextSymbol = gameObjects[characterPositionY + directionMoveY, characterPositionX + directionMoveX];
+
+            if (nextSymbol != wallSymbol)
+            {
+                int characterPreviousX = characterPositionX;
+                int characterPreviousY = characterPositionY;
+                characterPositionX += directionMoveX;
+                characterPositionY += directionMoveY;
+                gameObjects[characterPositionY, characterPositionX] = character;
+                gameObjects[characterPreviousY, characterPreviousX] = voidSymbol;
+            }
+        }
+
+        static void ConsiderCollectables(ref int collectableAmountLeft, char collidedSymbol, ref int collectableAmount, char collectableSymbol)
+        {
+            if(collidedSymbol == collectableSymbol)
+            {
+                collectableAmountLeft--;
+                collectableAmount++;
+            }
+        }
+
+        static bool CheckEnemyCollision(ref int playerPositionX, ref int playerPositionY, ref int enemyPositionX, ref int enemyPositionY, ref bool canPlay)
+        {
+            if(playerPositionX == enemyPositionX && playerPositionY == enemyPositionY)
+            {
+                canPlay = false;
+            }
+
+            return canPlay;
+        }
+
+        static void GetRandomPrimaryObjects(char[,] gameObjects, out int playerPositionX, out int playerPositionY, out int collectableTotalAmount, out int enemyPositionX, 
+            out int enemyPositionY, char voidSymbol, char wallSymbol, char playerSymbol, char enemySymbol, char collectableSymbol)
+        {
+            bool isPlayerPositionSet = false;
+            bool isEnemyPositionSet = false;
+            collectableTotalAmount = 0;
+            playerPositionX = 0;
+            playerPositionY = 0;
+            enemyPositionX = 0;
+            enemyPositionY = 0;
+            int chanceRange = 11;
+            int numberChanceWallSet = 0;
+            int numberChanceEnemySet = 1;
+            int numberChancePlayerPositionSet = 2;
+            int numberChanceCollectableSet = 3;
+
+            Random random = new Random();
+
+            for (int y = 0; y < gameObjects.GetLength(0); y++)
+            {
+                for (int x = 0; x < gameObjects.GetLength(1); x++)
+                {
+                    int chanceRandomNumber = random.Next(0, chanceRange);
+
+                    if(chanceRandomNumber == numberChanceWallSet || x == 0 || x == gameObjects.GetLength(1)-1 || y == 0 || y == gameObjects.GetLength(0) - 1)
+                    {
+                        gameObjects[y, x] = wallSymbol;
+
+                    }
+                    else if(chanceRandomNumber == numberChanceEnemySet && isEnemyPositionSet == false)
+                    {
+                        gameObjects[y, x] = enemySymbol;
+                        enemyPositionX = x;
+                        enemyPositionY = y;
+                        isEnemyPositionSet = true;
+                    }
+                    else if(chanceRandomNumber == numberChancePlayerPositionSet && isPlayerPositionSet == false)
+                    {
+                        gameObjects[y, x] = playerSymbol;
+                        playerPositionX = x;
+                        playerPositionY = y;
+                        isPlayerPositionSet = true;
+                    }
+                    else if(chanceRandomNumber == numberChanceCollectableSet)
+                    {
+                        gameObjects[y, x] = collectableSymbol;
+                        collectableTotalAmount++;
+                    }
+                    else
+                    {
+                        gameObjects[y, x] = voidSymbol;
+                    }
+                }
+            }
+        }
+
+        static void DrawInterface(int collectablePlayerValue, int collectableEnemyValue, int collectableTotalValue, int mapHeigth, int timeAmount)
+        {
+            Console.SetCursorPosition(0, mapHeigth + 1);
+            Console.Write($"Left $ to collect: {collectableTotalValue} " +
+                $"\nCollected $:" +
+                $"\n  you : {collectablePlayerValue} " +
+                $"\n  enemy : {collectableEnemyValue} " +
+                $"\nTime Left : {timeAmount} ");
+        }
+    }
+}
