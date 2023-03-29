@@ -1,0 +1,100 @@
+using System;
+
+namespace shuffle2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] array1 = new int[] { 1, 2, 3, 4, 5 };
+            int[] mixedArray = new int[0];
+
+            PrintArray(array1);
+
+            MixArray(array1, mixedArray);
+
+            PrintArray(array1);
+
+        }
+
+        static void PrintArray(int[] array)
+        {
+            for (int i = 0; i < array.Length; i++)
+            {
+                Console.Write(array[i] + " ");
+            }
+        }
+
+        static int[] MixArray(int[] array, int[] mixedArray)
+        {
+            int addingIndex = 0;
+
+            while(array.Length != mixedArray.Length)
+            {
+
+                mixedArray = EnlargeArray(mixedArray);
+
+                int randomIndex = GetRandomIndex(array);
+
+                int valueByRandomIndex = GetValueByRandomIndex(array, randomIndex);
+
+                array = DecreaseArray(array, randomIndex);
+
+                mixedArray = FillNewArray(mixedArray, valueByRandomIndex, addingIndex);
+
+                addingIndex++;
+            }
+
+            return mixedArray;
+        }
+
+        static int GetRandomIndex(int[] array)
+        {
+            Random random = new Random();
+
+            int randomIndex;
+            return randomIndex = random.Next(0, array.Length);
+        }
+
+        static int[] DecreaseArray(int[] array, int randomIndex)
+        {
+            int[] decreasedArray = new int[array.Length - 1];
+
+            for (int i = 0; i < randomIndex; i++)
+            {
+                decreasedArray[i] = array[i];
+            }
+
+            for (int i = randomIndex + 1; i < array.Length - 1; i++)
+            {
+                decreasedArray[i] = array[i];
+            }
+
+            return decreasedArray;
+        }
+
+        static int GetValueByRandomIndex(int[] array, int randomIndex)
+        {
+            int valueByRandomIndex = array[randomIndex];
+            return valueByRandomIndex;
+        }
+
+        static int[] EnlargeArray(int[] mixedArray)
+        {
+            int[] enlargedArray = new int[mixedArray.Length + 1];
+
+            for (int i = 0; i < mixedArray.Length; i++)
+            {
+                enlargedArray[i] = mixedArray[i];
+            }
+
+            return enlargedArray;
+        }
+
+        static int[] FillNewArray(int[] mixedArray, int valueByRandomIndex, int addingIndex)
+        {
+            mixedArray[addingIndex] = valueByRandomIndex;
+            return mixedArray;
+        }
+    }
+}
