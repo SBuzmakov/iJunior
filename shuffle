@@ -67,7 +67,7 @@ namespace shuffle2
 
             for (int i = randomIndex + 1; i < array.Length - 1; i++)
             {
-                decreasedArray[i] = array[i];
+                decreasedArray[i - 1] = array[i];
             }
 
             return decreasedArray;
