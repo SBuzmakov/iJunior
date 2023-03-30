@@ -6,15 +6,15 @@ namespace shuffle2
     {
         static void Main(string[] args)
         {
-            int[] array1 = new int[] { 1, 2, 3, 4, 5 };
+            int[] array = new int[] { 1, 2, 3, 4, 5 };
             int[] mixedArray = new int[0];
+            int arrayLength = array.Length;
 
-            PrintArray(array1);
+            PrintArray(array);
 
-            MixArray(array1, mixedArray);
+            array = MixArray(array, mixedArray, arrayLength);
 
-            PrintArray(array1);
-
+            PrintArray(array);
         }
 
         static void PrintArray(int[] array)
@@ -23,15 +23,16 @@ namespace shuffle2
             {
                 Console.Write(array[i] + " ");
             }
+
+            Console.WriteLine();
         }
 
-        static int[] MixArray(int[] array, int[] mixedArray)
+        static int[] MixArray(int[] array, int[] mixedArray, int arrayLength)
         {
             int addingIndex = 0;
 
-            while(array.Length != mixedArray.Length)
+            while(mixedArray.Length != arrayLength)
             {
-
                 mixedArray = EnlargeArray(mixedArray);
 
                 int randomIndex = GetRandomIndex(array);
@@ -53,7 +54,8 @@ namespace shuffle2
             Random random = new Random();
 
             int randomIndex;
-            return randomIndex = random.Next(0, array.Length);
+            randomIndex = random.Next(0, array.Length);
+            return randomIndex;
         }
 
         static int[] DecreaseArray(int[] array, int randomIndex)
@@ -65,7 +67,7 @@ namespace shuffle2
                 decreasedArray[i] = array[i];
             }
 
-            for (int i = randomIndex + 1; i < array.Length - 1; i++)
+            for (int i = randomIndex + 1; i < array.Length; i++)
             {
                 decreasedArray[i - 1] = array[i];
             }
