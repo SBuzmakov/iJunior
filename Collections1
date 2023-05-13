@@ -1,0 +1,35 @@
+namespace Collections_1
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            bool isWork = true;
+            string userInput;
+            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+            dictionary.Add("программирование", "часть прикладной математики и вычислительной техники, разрабатывающая методы составления программ (словарь Ожегова)");
+
+            while(isWork)
+            {
+                Console.WriteLine("Введите слово: ");
+
+                userInput = ReadUserInput();
+
+                if(dictionary.ContainsKey(userInput))
+                {
+                    Console.WriteLine($"{userInput} - {dictionary[userInput]}");
+                }
+                else
+                {
+                    Console.WriteLine("В словаре отсутствует данное слово"); 
+                }
+            }
+        }
+
+        static string ReadUserInput()
+        {
+            string userInput = Console.ReadLine();
+            return userInput;
+        }
+    }
+}
