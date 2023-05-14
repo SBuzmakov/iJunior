@@ -1,0 +1,35 @@
+namespace Collections_2
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            int moneyBalance = 0;
+            Queue<int> clientsPayments = new Queue<int>();
+            clientsPayments.Enqueue(1000);
+            clientsPayments.Enqueue(2000);
+            clientsPayments.Enqueue(3000);
+            clientsPayments.Enqueue(4000);
+            clientsPayments.Enqueue(5000);
+
+            while(clientsPayments.Count > 0)
+            {
+                int nextPayment = clientsPayments.Peek();
+                Console.WriteLine($"Balance: {moneyBalance}");
+                Console.WriteLine($"\nNext payment: {clientsPayments.Peek()}");
+                Console.WriteLine("\nPress any key to transfer payment");
+                Console.ReadLine();
+
+                moneyBalance += nextPayment;
+
+                clientsPayments.Dequeue();
+
+                Console.Clear();
+            }
+
+            Console.WriteLine($"Balance: {moneyBalance}");
+            Console.WriteLine("\nAll payments are transfered");
+            Console.ReadLine();
+        }
+    }
+}
