@@ -8,25 +8,30 @@ namespace Collections_2
             int moneyBalance = 0;
             Queue<int> clientsPayments = new Queue<int>();
 
-            clientsPayments = AddClientsQueue(paymentsAmount, clientsPayments);
+            AddClientsQueue(paymentsAmount, clientsPayments);
 
-            while(clientsPayments.Count > 0)
-            {
-                DrawInterface(moneyBalance, clientsPayments);
-
-                Console.ReadLine();
-
-                moneyBalance = TransferPayment(moneyBalance, clientsPayments); 
-
-                Console.Clear();
-            }
+            TransferPayment(clientsPayments, ref moneyBalance);
 
             Console.WriteLine($"Balance: {moneyBalance}");
             Console.WriteLine("\nAll payments are transfered");
             Console.ReadLine();
         }
 
-        static Queue<int> AddClientsQueue(int paymentsAmount, Queue<int> clientsPayments)
+        static void TransferPayment(Queue<int> clientsPayments, ref int moneyBalance)
+        {
+            while (clientsPayments.Count > 0)
+            {
+                DrawInterface(moneyBalance, clientsPayments);
+
+                Console.ReadLine();
+
+                moneyBalance += clientsPayments.Dequeue();
+
+                Console.Clear();
+            }
+        }
+
+        static void AddClientsQueue(int paymentsAmount, Queue<int> clientsPayments)
         {
             Random random = new Random();
             int minimalPayment = 1;
@@ -37,8 +42,6 @@ namespace Collections_2
                 int paymentValue = random.Next(minimalPayment, maximumPayment);
                 clientsPayments.Enqueue(paymentValue);
             }
-
-            return clientsPayments;
         }
 
         static void DrawInterface(int moneyBalance, Queue<int> clientsPayments)
@@ -46,12 +49,6 @@ namespace Collections_2
             Console.WriteLine($"Balance: {moneyBalance}");
             Console.WriteLine($"\nNext payment: {clientsPayments.Peek()}");
             Console.WriteLine("\nPress any key to transfer payment");
-        }
-
-        static int TransferPayment(int moneyBalance, Queue<int> clientsPayments)
-        {
-            moneyBalance += clientsPayments.Dequeue();
-            return moneyBalance;
         }
     }
 }
