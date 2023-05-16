@@ -4,25 +4,19 @@ namespace Collections_2
     {
         static void Main(string[] args)
         {
+            int paymentsAmount = 10;
             int moneyBalance = 0;
             Queue<int> clientsPayments = new Queue<int>();
-            clientsPayments.Enqueue(1000);
-            clientsPayments.Enqueue(2000);
-            clientsPayments.Enqueue(3000);
-            clientsPayments.Enqueue(4000);
-            clientsPayments.Enqueue(5000);
+
+            clientsPayments = AddClientsQueue(paymentsAmount, clientsPayments);
 
             while(clientsPayments.Count > 0)
             {
-                int nextPayment = clientsPayments.Peek();
-                Console.WriteLine($"Balance: {moneyBalance}");
-                Console.WriteLine($"\nNext payment: {clientsPayments.Peek()}");
-                Console.WriteLine("\nPress any key to transfer payment");
+                DrawInterface(moneyBalance, clientsPayments);
+
                 Console.ReadLine();
 
-                moneyBalance += nextPayment;
-
-                clientsPayments.Dequeue();
+                moneyBalance = TransferPayment(moneyBalance, clientsPayments); 
 
                 Console.Clear();
             }
@@ -30,6 +24,34 @@ namespace Collections_2
             Console.WriteLine($"Balance: {moneyBalance}");
             Console.WriteLine("\nAll payments are transfered");
             Console.ReadLine();
+        }
+
+        static Queue<int> AddClientsQueue(int paymentsAmount, Queue<int> clientsPayments)
+        {
+            Random random = new Random();
+            int minimalPayment = 1;
+            int maximumPayment = 10000;
+
+            for (int i = 0; i < paymentsAmount; i++)
+            {
+                int paymentValue = random.Next(minimalPayment, maximumPayment);
+                clientsPayments.Enqueue(paymentValue);
+            }
+
+            return clientsPayments;
+        }
+
+        static void DrawInterface(int moneyBalance, Queue<int> clientsPayments)
+        {
+            Console.WriteLine($"Balance: {moneyBalance}");
+            Console.WriteLine($"\nNext payment: {clientsPayments.Peek()}");
+            Console.WriteLine("\nPress any key to transfer payment");
+        }
+
+        static int TransferPayment(int moneyBalance, Queue<int> clientsPayments)
+        {
+            moneyBalance += clientsPayments.Dequeue();
+            return moneyBalance;
         }
     }
 }
