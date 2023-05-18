@@ -21,7 +21,7 @@ namespace Collections_3
 
             while (isWork)
             {
-                Console.Write("enter number, sum, or exit: ");
+                Console.Write($"enter number, {SumUserInput}, or {ExitUserInput}: ");
 
                  string userInput = Console.ReadLine();
 
