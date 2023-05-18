@@ -4,39 +4,42 @@ namespace Collections_3
     {
         static void Main(string[] args)
         {
-
-            List<int> numbersList = new List<int>();
-            bool isWork = true;
-
-            WorkListProgramm(isWork, numbersList);
-
-            Console.Clear();
-            Console.WriteLine("The programm is finished.");
-        }  
-        
-        static void WorkListProgramm(bool isWork, List<int> numbersList)
-        {
             const string SumUserInput = "sum";
             const string ExitUserInput = "exit";
+            List<int> numbersList = new List<int>();
+            bool isWork = true;
 
             while (isWork)
             {
                 Console.Write($"enter number, {SumUserInput}, or {ExitUserInput}: ");
 
-                 string userInput = Console.ReadLine();
+                string userInput = Console.ReadLine();
 
-                switch (userInput)
-                {
-                    case SumUserInput:
-                        SumNumbers(numbersList);
-                        break;
-                    case ExitUserInput:
-                        isWork = false;
-                        break;
-                    default:
-                        AddNumber(userInput, numbersList);
-                        break;
-                }
+                GetUserInputCommand(userInput, numbersList, isWork);
+            }
+
+            Console.Clear();
+            Console.WriteLine("The programm is finished.");
+        }  
+        
+        static void GetUserInputCommand(string userInput, List<int> numbersList, bool isWork)
+        {
+            const string SumUserInput = "sum";
+            const string ExitUserInput = "exit";
+
+            switch (userInput)
+            {
+                case SumUserInput:
+                    SumNumbers(numbersList);
+                    break;
+
+                case ExitUserInput:
+                    isWork = false;
+                    break;
+
+                default:
+                    AddNumber(userInput, numbersList);
+                    break;
             }
         }
 
@@ -49,7 +52,7 @@ namespace Collections_3
             }
             else 
             {
-                Console.WriteLine("enter correct value (number, sum, exit)");
+                Console.WriteLine("enter correct value");
             }
         }
 
