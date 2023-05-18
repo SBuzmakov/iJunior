@@ -15,14 +15,14 @@ namespace Collections_3
 
                 string userInput = Console.ReadLine();
 
-                GetUserInputCommand(userInput, numbersList, isWork);
+                GetUserInputCommand(userInput, numbersList, ref isWork);
             }
 
             Console.Clear();
             Console.WriteLine("The programm is finished.");
         }  
         
-        static void GetUserInputCommand(string userInput, List<int> numbersList, bool isWork)
+        static void GetUserInputCommand(string userInput, List<int> numbersList, ref bool isWork)
         {
             const string SumUserInput = "sum";
             const string ExitUserInput = "exit";
