@@ -42,9 +42,7 @@ namespace Collections_3
 
         static void AddNumber(string userInput, List<int> numbersList)
         {
-            bool isCorrectNumber = int.TryParse(userInput, out int number);
-
-            if (isCorrectNumber)
+            if (int.TryParse(userInput, out int number))
             {
                 numbersList.Add(number);
                 Console.WriteLine(number + " added to list");
