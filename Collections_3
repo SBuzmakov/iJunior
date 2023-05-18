@@ -1,0 +1,74 @@
+namespace Collections_3
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+
+            List<int> numbersList = new List<int>();
+            bool isWork = true;
+
+            WorkListProgramm(isWork, numbersList);
+
+            Console.Clear();
+            Console.WriteLine("The programm is finished.");
+        }  
+        
+        static void WorkListProgramm(bool isWork, List<int> numbersList)
+        {
+            const string SumUserInput = "sum";
+            const string ExitUserInput = "exit";
+
+            while (isWork)
+            {
+                Console.Write("enter number, sum, or exit: ");
+
+                 string userInput = Console.ReadLine();
+
+                switch (userInput)
+                {
+                    case SumUserInput:
+
+                        SumNumbers(numbersList);
+
+                        break;
+                    case ExitUserInput:
+                        isWork = false;
+                        break;
+                    default:
+
+                        AddNumber(userInput, numbersList);
+
+                        break;
+                }
+            }
+        }
+
+        static void AddNumber(string userInput, List<int> numbersList)
+        {
+            bool isCorrectNumber = int.TryParse(userInput, out int number);
+
+            if (isCorrectNumber)
+            {
+                numbersList.Add(number);
+                Console.WriteLine(number + " added to list");
+            }
+            else 
+            {
+                Console.WriteLine("enter correct value (number, sum, exit)");
+            }
+        }
+
+        static void SumNumbers(List<int> numbersList)
+        {
+            int numbersSum = 0;
+
+            for (int i = 0; i < numbersList.Count; i++)
+            {
+                numbersSum += numbersList[i];
+            }
+
+            Console.WriteLine("sum of entered numbers: " + numbersSum);
+        }
+    }
+}
