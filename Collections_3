@@ -28,17 +28,13 @@ namespace Collections_3
                 switch (userInput)
                 {
                     case SumUserInput:
-
                         SumNumbers(numbersList);
-
                         break;
                     case ExitUserInput:
                         isWork = false;
                         break;
                     default:
-
                         AddNumber(userInput, numbersList);
-
                         break;
                 }
             }
