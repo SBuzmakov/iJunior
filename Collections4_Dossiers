@@ -4,38 +4,37 @@ namespace Collections_4
     {
         static void Main(string[] args)
         {
-            const string ExitUserInput = "1";
-            const string AddDossierUserInput = "2";
-            const string DeleteDossierUserInput = "3";
-            const string ShowAllDossiersUserInput = "4";
+            const string ExitCommand = "1";
+            const string AddDossierCommand = "2";
+            const string DeleteDossierCommand = "3";
+            const string ShowAllDossiersCommand = "4";
 
             Dictionary<string, string> dossiers = new Dictionary<string, string>();
+
             bool isWork = true;
-            string fullName;
-            string employeePosition;
 
             while (isWork)
             {
-                Console.WriteLine($"enter number of command:\n{ExitUserInput} - exit\n{AddDossierUserInput} - add dossier\n{DeleteDossierUserInput} - delete dossier" +
-                    $"\n{ShowAllDossiersUserInput} - show all dossiers");
+                Console.WriteLine($"enter number of command:\n{ExitCommand} - exit\n{AddDossierCommand} - add dossier\n{DeleteDossierCommand} - delete dossier" +
+                    $"\n{ShowAllDossiersCommand} - show all dossiers");
 
                 string userInput = Console.ReadLine();
 
                 switch(userInput)
                 {
-                    case ExitUserInput:
+                    case ExitCommand:
                         isWork = false;
                         break;
 
-                    case AddDossierUserInput:
-                        dossiers.Add(fullName = EnterDossierFullname(), employeePosition = EnterDossierPosition());
+                    case AddDossierCommand:
+                        AddDossier(dossiers);
                         break;
 
-                    case DeleteDossierUserInput:
-                        dossiers.Remove(fullName = EnterDossierFullname());
+                    case DeleteDossierCommand:
+
                         break;
 
-                    case ShowAllDossiersUserInput:
+                    case ShowAllDossiersCommand:
                         ShowAllDossiers(dossiers);
                         break;
 
@@ -62,11 +61,27 @@ namespace Collections_4
                 return position;
             }
 
+            static void AddDossier(Dictionary<string, string> dossiers)
+            {
+                string fullName = EnterDossierFullname();
+
+                string employeePosition = EnterDossierPosition();
+
+                dossiers.Add(fullName, employeePosition);              
+            }
+
+            static void DeleteDossier(Dictionary<string, string> dossiers)
+            {
+                string fullName = EnterDossierFullname();
+
+                dossiers.Remove(fullName);
+            }
+
             static void ShowAllDossiers(Dictionary<string, string> dossiers)
             {
-                foreach (var item in dossiers)
+                foreach (var dossier in dossiers)
                 {
-                    Console.WriteLine($"{item.Key} - {item.Value}");
+                    Console.WriteLine($"{dossier.Key} - {dossier.Value}");
                 }
 
                 Console.ReadLine();
