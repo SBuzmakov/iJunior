@@ -15,34 +15,26 @@ namespace Collections_3
 
                 string userInput = Console.ReadLine();
 
-                GetUserInputCommand(userInput, numbersList, ref isWork);
+                switch (userInput)
+                {
+                    case SumUserInput:
+                        SumNumbers(numbersList);
+                        break;
+
+                    case ExitUserInput:
+                        isWork = false;
+                        break;
+
+                    default:
+                        AddNumber(userInput, numbersList);
+                        break;
+                }
             }
 
             Console.Clear();
             Console.WriteLine("The programm is finished.");
         }  
         
-        static void GetUserInputCommand(string userInput, List<int> numbersList, ref bool isWork)
-        {
-            const string SumUserInput = "sum";
-            const string ExitUserInput = "exit";
-
-            switch (userInput)
-            {
-                case SumUserInput:
-                    SumNumbers(numbersList);
-                    break;
-
-                case ExitUserInput:
-                    isWork = false;
-                    break;
-
-                default:
-                    AddNumber(userInput, numbersList);
-                    break;
-            }
-        }
-
         static void AddNumber(string userInput, List<int> numbersList)
         {
             if (int.TryParse(userInput, out int number))
