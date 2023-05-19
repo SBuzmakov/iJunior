@@ -1,0 +1,76 @@
+namespace Collections_4
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            const string ExitUserInput = "1";
+            const string AddDossierUserInput = "2";
+            const string DeleteDossierUserInput = "3";
+            const string ShowAllDossiersUserInput = "4";
+
+            Dictionary<string, string> dossiers = new Dictionary<string, string>();
+            bool isWork = true;
+            string fullName;
+            string employeePosition;
+
+            while (isWork)
+            {
+                Console.WriteLine($"enter number of command:\n{ExitUserInput} - exit\n{AddDossierUserInput} - add dossier\n{DeleteDossierUserInput} - delete dossier" +
+                    $"\n{ShowAllDossiersUserInput} - show all dossiers");
+
+                string userInput = Console.ReadLine();
+
+                switch(userInput)
+                {
+                    case ExitUserInput:
+                        isWork = false;
+                        break;
+
+                    case AddDossierUserInput:
+                        dossiers.Add(fullName = EnterDossierFullname(), employeePosition = EnterDossierPosition());
+                        break;
+
+                    case DeleteDossierUserInput:
+                        dossiers.Remove(fullName = EnterDossierFullname());
+                        break;
+
+                    case ShowAllDossiersUserInput:
+                        ShowAllDossiers(dossiers);
+                        break;
+
+                    default:
+                        Console.WriteLine("enter correct command");
+                        break;
+                }   
+                
+                Console.ReadLine();
+                Console.Clear();
+            }
+
+            static string EnterDossierFullname()
+            {
+                Console.Write("Enter the full name: ");
+                string fullName = Console.ReadLine();
+                return fullName;
+            }
+
+            static string EnterDossierPosition()
+            {
+                Console.Write("Enter the position: ");
+                string position = Console.ReadLine();
+                return position;
+            }
+
+            static void ShowAllDossiers(Dictionary<string, string> dossiers)
+            {
+                foreach (var item in dossiers)
+                {
+                    Console.WriteLine($"{item.Key} - {item.Value}");
+                }
+
+                Console.ReadLine();
+            }
+        }
+    }
+}
