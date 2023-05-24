@@ -31,7 +31,7 @@ namespace Collections_4
                         break;
 
                     case DeleteDossierCommand:
-
+                        DeleteDossier(dossiers);
                         break;
 
                     case ShowAllDossiersCommand:
@@ -63,25 +63,52 @@ namespace Collections_4
 
             static void AddDossier(Dictionary<string, string> dossiers)
             {
+                bool canAddDossier = true;
+
+                Console.WriteLine("Adding a dossier.");
+
                 string fullName = EnterDossierFullname();
 
-                string employeePosition = EnterDossierPosition();
+                CheckExistingName(dossiers, fullName, ref canAddDossier);
 
-                dossiers.Add(fullName, employeePosition);              
+                if (canAddDossier)
+                {
+                    string employeePosition = EnterDossierPosition();
+
+                    dossiers.Add(fullName, employeePosition);              
+                }
+                else
+                {
+                    Console.WriteLine("This name already exists");
+                }
             }
 
             static void DeleteDossier(Dictionary<string, string> dossiers)
             {
+                Console.WriteLine("Deleting a dossier.");
+
                 string fullName = EnterDossierFullname();
 
                 dossiers.Remove(fullName);
             }
 
+            static void CheckExistingName(Dictionary<string, string> dossiers, string fullNameInput, ref bool canAddDossier)
+            {
+                foreach (var name in dossiers)
+                {
+                    if(name.Key == fullNameInput)
+                    {
+                        canAddDossier = false;
+                        break;
+                    }
+                }
+            }
+
             static void ShowAllDossiers(Dictionary<string, string> dossiers)
             {
-                foreach (var dossier in dossiers)
+                foreach (var fullName in dossiers)
                 {
-                    Console.WriteLine($"{dossier.Key} - {dossier.Value}");
+                    Console.WriteLine($"{fullName.Key} - {fullName.Value}");
                 }
 
                 Console.ReadLine();
