@@ -63,23 +63,21 @@ namespace Collections_4
 
             static void AddDossier(Dictionary<string, string> dossiers)
             {
-                bool canAddDossier = true;
-
                 Console.WriteLine("Adding a dossier.");
 
                 string fullName = EnterDossierFullname();
 
-                CheckExistingName(dossiers, fullName, ref canAddDossier);
+                bool isNameExist = FindExistingName(dossiers, fullName);
 
-                if (canAddDossier)
+                if (isNameExist)
                 {
-                    string employeePosition = EnterDossierPosition();
-
-                    dossiers.Add(fullName, employeePosition);              
+                    Console.WriteLine("This name already exists");              
                 }
                 else
                 {
-                    Console.WriteLine("This name already exists");
+                    string employeePosition = EnterDossierPosition();
+
+                    dossiers.Add(fullName, employeePosition);
                 }
             }
 
@@ -92,26 +90,28 @@ namespace Collections_4
                 dossiers.Remove(fullName);
             }
 
-            static void CheckExistingName(Dictionary<string, string> dossiers, string fullNameInput, ref bool canAddDossier)
+            static bool FindExistingName(Dictionary<string, string> dossiers, string fullNameInput)
             {
-                foreach (var name in dossiers)
+                bool isNameExist = false;
+
+                foreach (string fullName in dossiers.Keys)
                 {
-                    if(name.Key == fullNameInput)
+                    if(fullName == fullNameInput)
                     {
-                        canAddDossier = false;
+                        isNameExist = true;
                         break;
                     }
                 }
+
+                return isNameExist;
             }
 
             static void ShowAllDossiers(Dictionary<string, string> dossiers)
             {
-                foreach (var fullName in dossiers)
+                foreach (KeyValuePair<string, string> dossierValuePair in dossiers)
                 {
-                    Console.WriteLine($"{fullName.Key} - {fullName.Value}");
+                    Console.WriteLine($"{dossierValuePair.Key} - {dossierValuePair.Value}");
                 }
-
-                Console.ReadLine();
             }
         }
     }
