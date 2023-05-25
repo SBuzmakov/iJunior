@@ -11,7 +11,9 @@ namespace Collections_5
 
             var numbersList = new List<int>();
 
-            UniteArraysToList(numbersList, array1, array2);
+            AddArrayToList(numbersList, array1);
+
+            AddArrayToList(numbersList, array2);
 
             ShowNumbersList(numbersList);
 
@@ -26,19 +28,13 @@ namespace Collections_5
             }
         }
 
-        static void UniteArraysToList(List<int> numbersList, int[] array1, int[] array2)
+        static void AddArrayToList(List<int> numbersList, int[] array)
         {
-            numbersList.AddRange(array1);
-
-            for (int i = 0; i < array2.Length; i++)
+            for (int i = 0; i < array.Length; i++)
             {
-                if (numbersList.Contains(array2[i]))
+                if (!numbersList.Contains(array[i]))
                 {
-                    continue;
-                }
-                else
-                {
-                    numbersList.Add(array2[i]);
+                    numbersList.Add(array[i]);                   
                 }
             }
         }
