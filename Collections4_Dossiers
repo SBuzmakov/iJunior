@@ -47,35 +47,26 @@ namespace Collections_4
                 Console.Clear();
             }
 
-            static string EnterDossierFullname()
+            static string EnterDossierInfo(string text)
             {
-                Console.Write("Enter the full name: ");
-                string fullName = Console.ReadLine();
-                return fullName;
-            }
-
-            static string EnterDossierPosition()
-            {
-                Console.Write("Enter the position: ");
-                string position = Console.ReadLine();
-                return position;
+                Console.Write(text);
+                string userInput = Console.ReadLine();
+                return userInput;
             }
 
             static void AddDossier(Dictionary<string, string> dossiers)
             {
                 Console.WriteLine("Adding a dossier.");
 
-                string fullName = EnterDossierFullname();
+                string fullName = EnterDossierInfo("Enter full name: ");
 
-                bool isNameExist = FindExistingName(dossiers, fullName);
-
-                if (isNameExist)
+                if (dossiers.ContainsKey(fullName))
                 {
                     Console.WriteLine("This name already exists");              
                 }
                 else
                 {
-                    string employeePosition = EnterDossierPosition();
+                    string employeePosition = EnterDossierInfo("Enter employee's position: ");
 
                     dossiers.Add(fullName, employeePosition);
                 }
@@ -85,25 +76,16 @@ namespace Collections_4
             {
                 Console.WriteLine("Deleting a dossier.");
 
-                string fullName = EnterDossierFullname();
+                string fullName = EnterDossierInfo("Enter full name to delete dossier: ");
 
-                dossiers.Remove(fullName);
-            }
-
-            static bool FindExistingName(Dictionary<string, string> dossiers, string fullNameInput)
-            {
-                bool isNameExist = false;
-
-                foreach (string fullName in dossiers.Keys)
+                if (dossiers.ContainsKey(fullName))
                 {
-                    if(fullName == fullNameInput)
-                    {
-                        isNameExist = true;
-                        break;
-                    }
+                    dossiers.Remove(fullName);
                 }
-
-                return isNameExist;
+                else
+                {
+                    Console.WriteLine("Dossier doesnt exist");
+                }
             }
 
             static void ShowAllDossiers(Dictionary<string, string> dossiers)
