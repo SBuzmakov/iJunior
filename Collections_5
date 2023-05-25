@@ -1,0 +1,46 @@
+using System.Runtime.Serialization.Formatters;
+
+namespace Collections_5
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] array1 = { 1, 2, 3, 4 };
+            int[] array2 = { 3, 4, 5, 6 };
+
+            var numbersList = new List<int>();
+
+            UniteArraysToList(numbersList, array1, array2);
+
+            ShowNumbersList(numbersList);
+
+            Console.ReadLine();
+        }
+
+        static void ShowNumbersList(List<int> numbersList)
+        {
+            foreach (int number in numbersList)
+            {
+                Console.WriteLine(number);
+            }
+        }
+
+        static void UniteArraysToList(List<int> numbersList, int[] array1, int[] array2)
+        {
+            numbersList.AddRange(array1);
+
+            for (int i = 0; i < array2.Length; i++)
+            {
+                if (numbersList.Contains(array2[i]))
+                {
+                    continue;
+                }
+                else
+                {
+                    numbersList.Add(array2[i]);
+                }
+            }
+        }
+    }
+}
